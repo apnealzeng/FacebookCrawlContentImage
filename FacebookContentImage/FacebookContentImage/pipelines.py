@@ -41,7 +41,7 @@ class FacebookMongoDB(scrapy.Item):
             db = self.conn['brand_buffer']
         str_dict = {
             # "_id": item["object_id"],
-            "type": db_name + item["type"],
+            "type": item["type"],
             "channel": item["channel"],
             "url": item["url"],
             "publish_time": item["publish_time"],
@@ -50,8 +50,7 @@ class FacebookMongoDB(scrapy.Item):
             "store_time": item["store_time"],
             "crawl_time_log": item["crawl_time_log"],
             "store_time_log": item["store_time_log"],
-            "data": item["data"],
-            "task_id": item['task_id']
+            "data": item["data"]
         }
 
         db.authenticate(MONGO_USERNAME, MONGO_PASSWORD, source='admin', mechanism='SCRAM-SHA-256')
