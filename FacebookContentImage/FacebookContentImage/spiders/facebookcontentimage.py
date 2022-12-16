@@ -54,8 +54,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
                 "post_data": data
             })
 
-    @staticmethod
-    def parse_url(response):
+    def parse_url(self, response):
         item = FacebookcontentimageItem()
         # image_url = response.xpath("//meta[@property='og:image']/@content").extract()
         #
