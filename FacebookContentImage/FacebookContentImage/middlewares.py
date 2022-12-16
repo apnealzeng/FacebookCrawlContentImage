@@ -108,7 +108,7 @@ class FacebookcontentimageDownloaderMiddleware:
 
 class RandomProxyDownloaderMiddleware(object):
 
-    def process_request(request, spider):
+    def process_request(self, request, spider):
         request.meta['proxy'] = 'http://' + random.choice(proxies_random_lst)
 
     def process_exception(self, request, exception, spider):

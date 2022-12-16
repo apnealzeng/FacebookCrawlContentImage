@@ -17,44 +17,45 @@ class FacebookcontentimageSpider(scrapy.Spider):
     # start_urls = ['http://facebook.com/']
 
     def start_requests(self):
-        # conn = f'mongodb://{parse.quote_plus(MONGO_USERNAME)}:{parse.quote_plus(MONGO_PASSWORD)}@{MONGO_HOST}:{MONGO_PORT}/?authSource=admin&authMechanism=SCRAM-SHA-256'
-        # client = pymongo.MongoClient(conn)
+        conn = f'mongodb://{parse.quote_plus(MONGO_USERNAME)}:{parse.quote_plus(MONGO_PASSWORD)}@{MONGO_HOST}:{MONGO_PORT}/?authSource=admin&authMechanism=SCRAM-SHA-256'
+        client = pymongo.MongoClient(conn)
 
-        # data_lst = client["potential_buffer"]["facebook_image"].find({"url": {"$regex": "story_fbid="}})
-        # print(data_lst.count())
-        # for data in data_lst[0:1]:
-        content_url = "http://httpbin.org/get"
-        # content_url = "https://www.facebook.com/permalink.php?story_fbid=2787143381295641&id=100000000202403&substory_index=0"
-        #     # content_url = "https://www.facebook.com/permalink.php?story_fbid=4572263482783613&id=100000000202403"
+        data_lst = client["potential_buffer"]["facebook_image"].find({"url": {"$regex": "story_fbid="}})
+        print(data_lst.count())
+        for data in data_lst[0:1]:
+            # content_url = "http://httpbin.org/get"
+            # content_url = "https://www.facebook.com/permalink.php?story_fbid=2787143381295641&id=100000000202403&substory_index=0"
+            # content_url = "https://www.facebook.com/permalink.php?story_fbid=4572263482783613&id=100000000202403"
 
-        #     # content_url = "https://www.facebook.com/permalink.php?story_fbid=2646752812001366&id=100000000202403"
+            # content_url = "https://www.facebook.com/permalink.php?story_fbid=2646752812001366&id=100000000202403"
 
-        #     # content_url = "https://www.facebook.com/permalink.php?story_fbid=4727126483963978&id=100000000202403"
-        #     content_url = data["url"]
-        print(content_url)
-        headers = {
-            'authority': 'www.facebook.com',
-            'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-            'accept-language': 'zh-CN,zh;q=0.9',
-            'cache-control': 'no-cache',
-            'cookie': 'fr=04fG66KDD9PucCG48..BjmszE.nC.AAA.0.0.BjmszE.AWW5K2HgANg; sb=xMyaYxwbJxbKZMVK3SejXLbl; datr=xMyaY9jXBO3FXFImEHdQtZXx; wd=1009x969; fr=04fG66KDD9PucCG48..BjmszE.nC.AAA.0.0.Bjms1s.AWX8qZKQ-Jo',
-            'pragma': 'no-cache',
-            'sec-ch-ua': '"Not?A_Brand";v="8", "Chromium";v="108", "Google Chrome";v="108"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Windows"',
-            'sec-fetch-dest': 'document',
-            'sec-fetch-mode': 'navigate',
-            'sec-fetch-site': 'none',
-            'sec-fetch-user': '?1',
-            'upgrade-insecure-requests': '1',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'
-        }
+            # content_url = "https://www.facebook.com/permalink.php?story_fbid=4727126483963978&id=100000000202403"
+            content_url = data["url"]
+            print(content_url)
+            headers = {
+                'authority': 'www.facebook.com',
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                'accept-language': 'zh-CN,zh;q=0.9',
+                'cache-control': 'no-cache',
+                'cookie': 'fr=04fG66KDD9PucCG48..BjmszE.nC.AAA.0.0.BjmszE.AWW5K2HgANg; sb=xMyaYxwbJxbKZMVK3SejXLbl; datr=xMyaY9jXBO3FXFImEHdQtZXx; wd=1009x969; fr=04fG66KDD9PucCG48..BjmszE.nC.AAA.0.0.Bjms1s.AWX8qZKQ-Jo',
+                'pragma': 'no-cache',
+                'sec-ch-ua': '"Not?A_Brand";v="8", "Chromium";v="108", "Google Chrome";v="108"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'none',
+                'sec-fetch-user': '?1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'
+            }
 
-        yield scrapy.Request(content_url, headers=headers, callback=self.parse_url, meta={
-            "post_data": "data"
-        })
+            yield scrapy.Request(content_url, headers=headers, callback=self.parse_url, meta={
+                "post_data": data
+            })
 
-    def parse_url(self, response):
+    @staticmethod
+    def parse_url(response):
         print(response.text)
         item = FacebookcontentimageItem()
         # image_url = response.xpath("//meta[@property='og:image']/@content").extract()
