@@ -20,7 +20,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
         conn = f'mongodb://{parse.quote_plus(MONGO_USERNAME)}:{parse.quote_plus(MONGO_PASSWORD)}@{MONGO_HOST}:{MONGO_PORT}/?authSource=admin&authMechanism=SCRAM-SHA-256'
         client = pymongo.MongoClient(conn)
 
-        data_lst = client["potential_buffer"]["facebook_image"].find({"$regex": "story_fbid="})
+        data_lst = client["potential_buffer"]["facebook_image"].find({"url": {"$regex": "story_fbid="}})
         print(data_lst.count())
         for data in data_lst[0:1]:
 
@@ -31,7 +31,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
 
             # content_url = "https://www.facebook.com/permalink.php?story_fbid=4727126483963978&id=100000000202403"
             content_url = data["url"]
-
+            print(content_url)
             headers = {
                 'authority': 'www.facebook.com',
                 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
