@@ -52,7 +52,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
 
             yield scrapy.Request(content_url, headers=headers, callback=self.parse_url, meta={
                 "post_data": data
-            })
+            }, dont_filter=True)
 
     @staticmethod
     def parse_url(response):
