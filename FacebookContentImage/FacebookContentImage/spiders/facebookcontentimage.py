@@ -21,8 +21,8 @@ class FacebookcontentimageSpider(scrapy.Spider):
         client = pymongo.MongoClient(conn)
 
         data_lst = client["potential_buffer"]["facebook_image"].find({"$regex": "story_fbid="})
-
-        for data in data_lst:
+        print(data_lst.count())
+        for data in data_lst[0:1]:
 
             # content_url = "https://www.facebook.com/permalink.php?story_fbid=2787143381295641&id=100000000202403&substory_index=0"
             # content_url = "https://www.facebook.com/permalink.php?story_fbid=4572263482783613&id=100000000202403"
