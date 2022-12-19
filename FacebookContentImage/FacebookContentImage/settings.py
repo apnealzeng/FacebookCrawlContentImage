@@ -28,7 +28,7 @@ LOG_LEVEL = 'INFO'
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 0.1
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -67,6 +67,8 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'FacebookContentImage.pipelines.FacebookcontentimagePipeline': 300,
+   #  'FacebookContentImage.pipelines.FacebookcontentimagePipeline': 301,
+    'FacebookContentImage.pipelines.ImageDownload': 302
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -96,6 +98,7 @@ MONGO_PORT = 27017
 MONGO_USERNAME = "developer01"
 MONGO_PASSWORD = "&lz3s3hf1#"
 MONGO_SET_2 = "facebook_image_new"
+MONGO_SET_OLD = "facebook_image"
 
 # google storage bucket
 IMAGES_STORE = 'gs://koolerbucket.adtechinno.com/kooler/'

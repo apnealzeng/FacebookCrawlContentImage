@@ -5,6 +5,7 @@
 
 
 # useful for handling different item types with a single interface
+import datetime
 import logging
 
 import pymongo
@@ -13,11 +14,13 @@ from itemadapter import ItemAdapter
 from scrapy.pipelines.images import ImagesPipeline
 
 from FacebookContentImage.items import FacebookcontentimageItem
-from FacebookContentImage.settings import MONGO_HOST, MONGO_PORT, MONGO_USERNAME, MONGO_PASSWORD, MONGO_SET_2
+from FacebookContentImage.settings import MONGO_HOST, MONGO_PORT, MONGO_USERNAME, MONGO_PASSWORD, MONGO_SET_2, \
+    MONGO_SET_OLD
 
 
 class FacebookcontentimagePipeline:
     def process_item(self, item, spider):
+        print(item)
         return item
 
 
@@ -59,6 +62,19 @@ class FacebookMongoDB(scrapy.Item):
 
         myset.insert_one(str_dict)
 
+        myset_old = db[MONGO_SET_OLD]
+
+        myset_old.update_many(
+            {
+                "data.content_id": item["data"]["content_id"]
+            },
+            {
+                "$set": {
+                    "ref_date_time": datetime.datetime.now()
+                }
+            }
+        )
+
         return item
 
 
@@ -77,6 +93,9 @@ class ImageDownload(ImagesPipeline):
 
             elif item['col'] in ['brand_kol_list']:
                 bucket_name = 'brand_buffer'
+
+            elif item['col'] in ['potential_kol_list']:
+                bucket_name = 'potential_buffer'
 
             else:
                 raise ValueError("pipeline image dowload bucket_name")
@@ -106,8 +125,7 @@ class ImageDownload(ImagesPipeline):
                         yield scrapy.Request(photo_url_2, headers=self.headers, meta={
                             "img_id": img_id, "content_id": item['data']["content_id"],
                             "img_type": "content_img", "bucket_name": bucket_name,
-                            "platform_id": item["platform_id"], "kol_account_id": item["kol_main_id"],
-                            "task_id": item["task_id"], "kol_main_id": item["kol_main_id"]
+                            "platform_id": item["platform_id"]
                         })
                     else:
                         with open("image_error.txt", 'a') as f:
