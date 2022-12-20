@@ -7,15 +7,18 @@
 # useful for handling different item types with a single interface
 import datetime
 import logging
+import re
 
 import pymongo
+import pytz
 import scrapy
 from itemadapter import ItemAdapter
 from scrapy.pipelines.images import ImagesPipeline
-
+from scrapy.pipelines.files import FilesPipeline, logger, FileException
+from scrapy.utils.request import referer_str
 from FacebookContentImage.items import FacebookcontentimageItem
 from FacebookContentImage.settings import MONGO_HOST, MONGO_PORT, MONGO_USERNAME, MONGO_PASSWORD, MONGO_SET_2, \
-    MONGO_SET_OLD
+    MONGO_SET_OLD, FILES_STORE
 
 
 class FacebookcontentimagePipeline:
@@ -24,14 +27,12 @@ class FacebookcontentimagePipeline:
         return item
 
 
-class FacebookMongoDB(scrapy.Item):
+class FacebookMongoDB(object):
     def open_spider(self, spider):
         self.conn = pymongo.MongoClient(
             MONGO_HOST,
             MONGO_PORT
         )
-        # self.db = self.conn[MONGO_DB]
-        # self.myset = self.db[MONGO_SET]
 
     def process_item(self, item, spider):
         print("--------", item.keys())
@@ -43,7 +44,6 @@ class FacebookMongoDB(scrapy.Item):
             db_name = 'brand_'
             db = self.conn['brand_buffer']
         str_dict = {
-            # "_id": item["object_id"],
             "type": item["type"],
             "channel": item["channel"],
             "url": item["url"],
@@ -158,4 +158,121 @@ class ImageDownload(ImagesPipeline):
     def item_completed(self, results, item, info):
         return item
 
+
+class VideoDownload(FilesPipeline):
+    headers = {
+        # "Proxy-Authorization": xun_proxy()['auth'],
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Range": "bytes=0-52428800"
+    }
+
+    def get_media_requests(self, item, info):
+        if isinstance(item, FacebookcontentimageItem):
+            if item['col'] in ['kooler_kol_list', 'kooler_post_list']:
+                bucket_name = 'kooler_buffer'
+
+            elif item['col'] in ['brand_kol_list']:
+                bucket_name = 'brand_buffer'
+
+            elif item['col'] in ['potential_kol_list']:
+                bucket_name = 'potential_buffer'
+
+            if item['data']["video_info"]:
+
+                video_lst = item['data']["video_info"]
+
+                for video_i in video_lst:
+
+                    video_id = video_i["id"]
+
+                    photo_url_2 = video_i["url"]
+                    if "http" not in photo_url_2:
+                        photo_url_2 = "https:" + photo_url_2
+                    if photo_url_2:
+
+                        print('video_url--ddd->', photo_url_2)
+                        logging.info('video_url--ddd-> ' + photo_url_2)
+                        r_p = re.findall(r'https://(.*?)/v', photo_url_2)[0]
+                        photo_url_2 = photo_url_2.replace(r_p, 'video.xx.fbcdn.net')
+
+                        yield scrapy.Request(photo_url_2, headers=self.headers, meta={
+                            "video_id": video_id, "content_id": item['data']["content_id"],
+                            "img_type": "content_video", "bucket_name": bucket_name,
+                            "platform_id": item["platform_id"]
+                        })
+
+                    else:
+                        with open("video_error.txt", 'a') as f:
+                            f.write('content_image' + photo_url_2 + '\n')
+
+    def media_downloaded(self, response, request, info, *, item=None):
+        referer = referer_str(request)
+
+        if response.status not in [200, 206]:
+            logger.warning(
+                'File (code: %(status)s): Error downloading file from '
+                '%(request)s referred in <%(referer)s>',
+                {'status': response.status,
+                 'request': request, 'referer': referer},
+                extra={'spider': info.spider}
+            )
+            raise FileException('download-error')
+
+        if not response.body:
+            logger.warning(
+                'File (empty-content): Empty file from %(request)s referred '
+                'in <%(referer)s>: no-content',
+                {'request': request, 'referer': referer},
+                extra={'spider': info.spider}
+            )
+            raise FileException('empty-content')
+
+        status = 'cached' if 'cached' in response.flags else 'downloaded'
+        logger.debug(
+            'File (%(status)s): Downloaded file from %(request)s referred in '
+            '<%(referer)s>',
+            {'status': status, 'request': request, 'referer': referer},
+            extra={'spider': info.spider}
+        )
+        self.inc_stats(info.spider, status)
+
+        try:
+            path = self.file_path(request, response=response, info=info, item=item)
+            checksum = self.file_downloaded(response, request, info, item=item)
+        except FileException as exc:
+            logger.warning(
+                'File (error): Error processing file from %(request)s '
+                'referred in <%(referer)s>: %(errormsg)s',
+                {'request': request, 'referer': referer, 'errormsg': str(exc)},
+                extra={'spider': info.spider}, exc_info=True
+            )
+            raise
+        except Exception as exc:
+            logger.error(
+                'File (unknown-error): Error processing file from %(request)s '
+                'referred in <%(referer)s>',
+                {'request': request, 'referer': referer},
+                exc_info=True, extra={'spider': info.spider}
+            )
+            raise FileException(str(exc))
+
+        return {'url': request.url, 'path': path, 'checksum': checksum, 'status': status}
+
+    def file_path(self, request, response=None, info=None):
+
+        if request.meta["img_type"] == "content_video":
+            content_id = request.meta["content_id"]
+            video_id = request.meta["video_id"]
+
+            gcp_path = request.meta['bucket_name'] + '/facebook/' + 'content/video' + '/%s' % str(
+                content_id) + '/%s' % str(video_id) + '.mp4'
+
+            logging.info(gcp_path)
+
+            return gcp_path
+
+    def item_completed(self, results, item, info):
+        return item
 

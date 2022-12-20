@@ -70,15 +70,15 @@ class FacebookcontentimageSpider(scrapy.Spider):
 
     def start_requests(self):
 
-        conn = f'mongodb://{parse.quote_plus(MONGO_USERNAME)}:{parse.quote_plus(MONGO_PASSWORD)}@{MONGO_HOST}:{MONGO_PORT}/?authSource=admin&authMechanism=SCRAM-SHA-256'
-        self.client = pymongo.MongoClient(conn)
-
-        data_lst = self.client["potential_buffer"]["facebook_image"].find({"url": {"$regex": "story_fbid="}})
-        # data_lst = [
-        #     {
-        #         "url": "https://www.facebook.com/permalink.php?story_fbid=4572263482783613&id=100000000202403"
-        #     }
-        #             ]
+        # conn = f'mongodb://{parse.quote_plus(MONGO_USERNAME)}:{parse.quote_plus(MONGO_PASSWORD)}@{MONGO_HOST}:{MONGO_PORT}/?authSource=admin&authMechanism=SCRAM-SHA-256'
+        # self.client = pymongo.MongoClient(conn)
+        #
+        # data_lst = self.client["potential_buffer"]["facebook_image"].find({"url": {"$regex": "story_fbid="}})
+        data_lst = [
+            {
+                "url": "https://www.facebook.com/nicky.smart3/videos/773597436976137/"
+            }
+                    ]
         # print(data_lst.count())
         headers = {
             "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;"
@@ -109,17 +109,26 @@ class FacebookcontentimageSpider(scrapy.Spider):
 
                 data['url'] = f"https://www.facebook.com/permalink.php?story_fbid={story_fbid}&id={id}"
 
-            # r_field, cookie_data = get_facebook_url.RedisInit('redis_hongkang').get_redis_data()
             r_field, cookie_data = self.get_redis_data(0)
 
             params = get_facebook_url.GetFacebookUserUrl().deal_url(data['url'], cookie_data['cookie'])
             platform_id = params.get('value')
-            # params['name'] = "page_id"
+
             logging.info('page_or_user is ' + params.get('name'))
 
             if platform_id:
+                if "video" in data['url']:
 
-                if params.get('name') == 'user_id':
+                    r_field, cookie_data = self.get_redis_data(11)
+                    logging.info(data['url'])
+                    yield scrapy.Request(data['url'], headers=headers, callback=self.parse_content_video,
+                                         cookies=cookie_data['cookie'],
+                                         meta={
+                                             'cookie': cookie_data['cookie'], 'cookie_data': cookie_data,
+                                             'user_id': params.get('value'),
+                                         })
+
+                elif params.get('name') == 'user_id':
                     r_field, cookie_data = self.get_redis_data(11)
                     logging.info(data['url'])
                     yield scrapy.Request(data['url'], headers=headers, callback=self.parse_user_content_1,
@@ -127,12 +136,11 @@ class FacebookcontentimageSpider(scrapy.Spider):
                                          meta={
                                              'cookie': cookie_data['cookie'], 'cookie_data': cookie_data,
                                              'user_id': params.get('value'),
-                                         })  # , cookies=cookie_data['cookie']
+                                         })
 
                 elif params.get('name') == 'page_id':
                     r_field, cookie_data = self.get_redis_data(12)
 
-                    # page_url = url + '/about/?ref=page_internal'
                     yield scrapy.Request(data['url'], headers=headers, cookies=cookie_data['cookie'], meta={
                         'user_id': params.get('value')
                     }, callback=self.parse_page_content_1)
@@ -313,9 +321,10 @@ class FacebookcontentimageSpider(scrapy.Spider):
             except Exception as e:
                 j_text = ''
 
-            # # print("j_text------>", j_text)
-            with open('user_lst.json.', 'w', encoding='utf-8') as f:
-                f.write(j_text)
+            # print("j_text------>", j_text)
+
+            # with open('user_lst.json.', 'w', encoding='utf-8') as f:
+            #     f.write(j_text)
             # --------解析第一页的内容 start----------
             first_data = json.loads(j_text)
             try:
@@ -466,7 +475,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
                     {
                         "id": content_video_id,
                         "url": content_video_url,
-                        "path": "E:\\FacebookKolImg\\content\\img\\{}\\{}.jpg".format(content_id,
+                        "path": "E:\\FacebookKolImg\\content\\video\\{}\\{}.mp4".format(content_id,
                                                                                       content_video_id)
                     }
                 )
@@ -886,7 +895,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
                 share_content = []
 
             update_info = {"update": True, "update_time": self.times}
-            item["type"] = "post_content"
+            item["type"] = "potential_post_content"
             item["channel"] = "facebook"
             item["url"] = content_url
             item["publish_time"] = p_time
@@ -921,7 +930,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
                 "homepage_url": "",
                 "hash_tag": re.findall(r'#(\w+)', content_text),
                 "lang": "",
-                "title": "",
+                "title": self.update_title(content_text),
                 "sub_title": "",
                 "content": content_text + share_link,
                 "other_content": [],
@@ -1202,7 +1211,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
                     {
                         "id": content_video_id,
                         "url": content_video_url,
-                        "path": "E:\\FacebookKolImg\\content\\img\\{}\\{}.jpg".format(content_id,
+                        "path": "E:\\FacebookKolImg\\content\\video\\{}\\{}.mp4".format(content_id,
                                                                                       content_video_id)
                     }
                 )
@@ -1404,7 +1413,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
                     {
                         "id": share_content_video_id,
                         "url": share_content_video_url,
-                        "path": "E:\\FacebookKolImg\\content\\img\\{}\\{}.jpg".format(content_id,
+                        "path": "E:\\FacebookKolImg\\content\\video\\{}\\{}.mp4".format(content_id,
                                                                                       share_content_video_id)
                     }
                 )
@@ -1781,7 +1790,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
             else:
                 share_content = []
 
-            item["type"] = "post_content"
+            item["type"] = "potential_post_content"
             item["channel"] = "facebook"
             item["url"] = content_url
             item["publish_time"] = p_time
@@ -1816,7 +1825,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
                 "homepage_url": "",
                 "hash_tag": re.findall(r'#(\w+)', content_text),
                 "lang": "",
-                "title": "",
+                "title": self.update_title(content_text),
                 "sub_title": "",
                 "content": content_text + share_link,
                 "content_level": "0",
@@ -1851,8 +1860,422 @@ class FacebookcontentimageSpider(scrapy.Spider):
 
             yield item
 
+    def parse_content_video(self, response):
+        """
+        解析视频URL
+        :param response:
+        :return:
+        """
+        # 解析视频url
+        item = FacebookcontentimageItem()
+        try:
+            text_d = re.findall(r'"__bbox":{"complete":false,"result":{"data":{"video":(.*?)\}\}\]\]',
+                                response.text)
+        except Exception as e:
+            text_d = []
+
+        for i in text_d:
+            try:
+                # j_text = re.findall(r'__bbox":(.*?)\}\}\]\],\[', i)[0] + '}'
+                j_text = '{"complete":true,"result":{"data":{"node":' + i + '}'
+            except Exception as e:
+                j_text = ''
+
+            # print("j_text------>", j_text)
+
+            # with open('user_lst.json.', 'w', encoding='utf-8') as f:
+            #     f.write(j_text)
+
+            first_data = json.loads(j_text)
+
+            try:
+                v_text = first_data["result"]["data"]["node"][0]
+            except Exception as e:
+                v_text = ''
+
+            if not v_text:
+
+                try:
+                    v_text = first_data["result"]["data"]["node"]
+                except Exception as e:
+                    v_text = first_data["result"]["data"]["user"]["timeline_feed_units"]["edges"][0]["node"]
+            feedback_context = v_text["creation_story"]["feedback_context"]
+            attachments = v_text["creation_story"]["attachments"]
+            # 贴文内容
+            try:
+                content_text = attachments[0]["media"]["savable_description"]["text"]
+            except Exception as e:
+                content_text = ""
+            # feedback_id 获取
+
+            # 贴文ID
+            try:
+                content_id = attachments[0]["media"]["id"]
+            except Exception as e:
+                content_id = ""
+
+            # 贴文图片
+            content_img_info_lst = list()
+            content_img_id = attachments[0]["media"]["preferred_thumbnail"]["id"]
+            content_img_url = attachments[0]["media"]["preferred_thumbnail"]["image"]["uri"]
+            image_path = IMAGES_STORE + "potential_buffer" + '/facebook/' + 'content/img' + '/%s' % str(
+                content_id) + '/%s' % str(content_img_id) + '.jpg'
+            content_img_info_lst.append(
+                {
+                    "id": content_img_id,
+                    "url": content_img_url,
+                    "path": image_path
+                }
+            )
+            # 转载链接
+            # 帖子视频
+            content_video_info_lst = list()
+            content_video_id = attachments[0]["media"]["id"]
+            content_video_url = attachments[0]["media"]["playable_url"]
+            video_path = IMAGES_STORE + "potential_buffer" + '/facebook/' + 'content/video' + '/%s' % str(
+                content_id) + '/%s' % str(content_video_id) + '.mp4'
+            content_video_info_lst.append(
+                {
+                    "id": content_video_id,
+                    "url": content_video_url,
+                    "path": video_path
+                }
+            )
+            # 帖子创建时间
+            try:
+                content_time = attachments[0]["publish_time"]
+            except Exception as e:
+                content_time = 0
+
+            # 帖子的url
+            content_url = feedback_context["feedback_target_with_context"]["url"]
+            # 帖子的点赞数
+
+            # 帖子的评论数
+            comment_count = feedback_context["feedback_target_with_context"]["comment_count"]["total_count"]
+            # 帖子的分享数
+
+            # 转发内容待定
+
+            # 转发的user_id
+
+            # 转发内容的图片
+
+            # 转发的视频
+
+            # 情绪反应人处理
+            r_lst = list()
+            reactions_count = dict()
+            try:
+                ufi_action_renderers_lst = feedback_context["feedback_target_with_context"]["ufi_action_renderers"]
+                for ufi_action_renderers in ufi_action_renderers_lst:
+                    if ufi_action_renderers.get("feedback"):
+                        reactions_lst = ufi_action_renderers["feedback"]["top_reactions"]["edges"]
+            except Exception as e:
+                reactions_lst = []
+
+            for reactions in reactions_lst:
+                if reactions["node"].get('id'):
+                    if reactions["node"].get("id") == '1635855486666999':
+                        like_count = reactions["reaction_count"]
+                        reactions_count['like_count'] = like_count
+                        r_lst.append(
+                            {
+                                "typecode": "like",
+                                "detail": [
+                                    {
+                                        "num": like_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+                    elif reactions["node"].get("id") == '1678524932434102':
+                        love_count = reactions["reaction_count"]
+                        reactions_count['love_count'] = love_count
+                        r_lst.append(
+                            {
+                                "typecode": "love",
+                                "detail": [
+                                    {
+                                        "num": love_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+                    elif reactions["node"].get("id") == '444813342392137':
+                        angry_count = reactions["reaction_count"]
+                        reactions_count['angry_count'] = angry_count
+                        r_lst.append(
+                            {
+                                "typecode": "anger",
+                                "detail": [
+                                    {
+                                        "num": angry_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+                    elif reactions["node"].get("id") == '613557422527858':
+                        care_count = reactions["reaction_count"]
+                        reactions_count['care_count'] = care_count
+                        r_lst.append(
+                            {
+                                "typecode": "care",
+                                "detail": [
+                                    {
+                                        "num": care_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+                    elif reactions["node"].get("id") == '115940658764963':
+                        haha_count = reactions["reaction_count"]
+                        reactions_count['haha_count'] = haha_count
+                        r_lst.append(
+                            {
+                                "typecode": "happy",
+                                "detail": [
+                                    {
+                                        "num": haha_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+                    elif reactions["node"].get("id") == '478547315650144':
+                        wow_count = reactions["reaction_count"]
+                        reactions_count['wow_count'] = wow_count
+                        r_lst.append(
+                            {
+                                "typecode": "wow",
+                                "detail": [
+                                    {
+                                        "num": wow_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+                    elif reactions["node"].get("id") == '908563459236466':
+                        sad_count = reactions["reaction_count"]
+                        reactions_count['sad_count'] = sad_count
+                        r_lst.append(
+                            {
+                                "typecode": "sad",
+                                "detail": [
+                                    {
+                                        "num": sad_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+
+                elif reactions["node"].get('reaction_type'):
+                    if reactions["node"].get('reaction_type') == 'LIKE':
+                        like_count = reactions["reaction_count"]
+                        reactions_count['like_count'] = like_count
+                        r_lst.append(
+                            {
+                                "typecode": "like",
+                                "detail": [
+                                    {
+                                        "num": like_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+                    elif reactions["node"].get("reaction_type") == 'LOVE':
+                        love_count = reactions["reaction_count"]
+                        reactions_count['love_count'] = love_count
+                        r_lst.append(
+                            {
+                                "typecode": "love",
+                                "detail": [
+                                    {
+                                        "num": love_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+                    elif reactions["node"].get("reaction_type") == 'ANGRY':
+                        angry_count = reactions["reaction_count"]
+                        reactions_count['angry_count'] = angry_count
+                        r_lst.append(
+                            {
+                                "typecode": "anger",
+                                "detail": [
+                                    {
+                                        "num": angry_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+                    elif reactions["node"].get("reaction_type") == 'CARE':
+                        care_count = reactions["reaction_count"]
+                        reactions_count['care_count'] = care_count
+                        r_lst.append(
+                            {
+                                "typecode": "care",
+                                "detail": [
+                                    {
+                                        "num": care_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+                    elif reactions["node"].get("reaction_type") == 'HAHA':
+                        haha_count = reactions["reaction_count"]
+                        reactions_count['haha_count'] = haha_count
+                        r_lst.append(
+                            {
+                                "typecode": "happy",
+                                "detail": [
+                                    {
+                                        "num": haha_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+                    elif reactions["node"].get("reaction_type") == 'WOW':
+                        wow_count = reactions["reaction_count"]
+                        reactions_count['wow_count'] = wow_count
+                        r_lst.append(
+                            {
+                                "typecode": "wow",
+                                "detail": [
+                                    {
+                                        "num": wow_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+                    elif reactions["node"].get("reaction_type") == 'SAD':
+                        sad_count = reactions["reaction_count"]
+                        reactions_count['sad_count'] = sad_count
+
+                        r_lst.append(
+                            {
+                                "typecode": "sad",
+                                "detail": [
+                                    {
+                                        "num": sad_count,
+                                        "updatetime": self.times
+                                    }
+                                ]
+                            }
+                        )
+            try:
+                time1 = datetime.datetime.utcfromtimestamp(int(content_time)).replace(
+                    microsecond=0) + datetime.timedelta(hours=8)
+
+                p_time = time1.astimezone(self.beijing).isoformat()
+            except Exception as e:
+                p_time = ""
+            # print('p_time---->', p_time)
+
+            item["type"] = "potential_post_content"
+            item["channel"] = "facebook"
+            item["url"] = content_url
+            item["publish_time"] = p_time
+            item["platform_id"] = response.meta['user_id']
+            item["crawl_time"] = self.times
+            item["store_time"] = self.times
+            item["crawl_time_log"] = [
+                self.times
+            ]
+            item["store_time_log"] = [
+                self.times
+            ]
+            brand_mention_str_lst = re.findall(r'@(\w+)', content_text)
+
+            if brand_mention_str_lst:
+                brand_mention = [
+                    {
+                        "type": "string", "value": brand_mention_str_lst
+                    },
+                    {
+                        "type": "link", "value": []
+                    },
+                    {
+                        "type": "img", "value": []
+                    }
+                ]
+            else:
+                brand_mention = []
+
+            item["data"] = {
+                "content_id": content_id,
+                "homepage_url": "",
+                "hash_tag": re.findall(r'#(\w+)', content_text),
+                "lang": "",
+                "title": self.update_title(content_text),
+                "sub_title": "",
+                "content": content_text,
+                "other_content": [],
+                "brand_mention": brand_mention,
+                "content_level": "0",
+                "share_content": [],
+                "image_info": content_img_info_lst,
+                "video_info": content_video_info_lst,
+                "sn_interact_num": [
+                                       {
+                                           "typecode": "comment",
+                                           "detail": [
+                                               {
+                                                   "num": comment_count,
+                                                   "updatetime": self.times
+                                               }
+                                           ]
+                                       },
+                                       {
+                                           "typecode": "share",
+                                           "detail": [
+                                               {
+                                                   "num": 0,
+                                                   "updatetime": self.times
+                                               }
+                                           ]
+                                       }
+                                   ] + r_lst
+
+            }
+
+            item["col"] = "potential_kol_list"
+
+            yield item
+
+    @staticmethod
+    def update_title(content):
+        """
+        从post_content中截取长度为50的字符串到tilte
+        :param content: 贴文内容
+        :return: title 截取的字符串
+        """
+        content_str = content.lstrip()
+        if content_str:
+            content_bytes = content_str.encode('utf-8')
+            content_tmp = content_bytes[:100]  # 此处截取bytes长度50
+            title = content_tmp.decode('utf-8', errors='ignore')  # 按bytes截取时有小部分无效的字节，传入errors='ignore'忽略错误
+            # print('cut_res 长度 字节数', len(cut_res), len(cut_res.encode()))
+
+            return title
+
+        return ""
+
     # 使用REDIS中的cookie
-    def get_redis_data(self, db):
+    @staticmethod
+    def get_redis_data(db):
         # 连接REDIS
         r_conn = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=db, password='neal188')
         # 获取所有属性名
@@ -1872,13 +2295,15 @@ class FacebookcontentimageSpider(scrapy.Spider):
         return r_field, json.loads(cookie_data)
 
     # 更新REDIS中的COOKIE
-    def update_redis_data(self, r_field, cookie_data, db):
+    @staticmethod
+    def update_redis_data(r_field, cookie_data, db):
         # 连接REDIS
         r_conn = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=db, password='neal188')
 
         r_conn.hset("facebook_error", r_field, str(cookie_data))
 
-    def del_redis_data(self, r_field, db):
+    @staticmethod
+    def del_redis_data(r_field, db):
         r_conn = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=db, password='neal188')
 
         r_conn.hdel('facebook', r_field)

@@ -53,9 +53,9 @@ DOWNLOAD_DELAY = 0.1
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-DOWNLOADER_MIDDLEWARES = {
-   'FacebookContentImage.middlewares.RandomProxyDownloaderMiddleware': 543,
-}
+# DOWNLOADER_MIDDLEWARES = {
+#    'FacebookContentImage.middlewares.RandomProxyDownloaderMiddleware': 543,
+# }
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -68,7 +68,8 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
    'FacebookContentImage.pipelines.FacebookcontentimagePipeline': 300,
    #  'FacebookContentImage.pipelines.FacebookcontentimagePipeline': 301,
-    'FacebookContentImage.pipelines.ImageDownload': 302
+    'FacebookContentImage.pipelines.ImageDownload': 302,
+   'FacebookContentImage.pipelines.VideoDownload': 303
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
