@@ -895,7 +895,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
                 share_content = []
 
             update_info = {"update": True, "update_time": self.times}
-            item["type"] = "potential_post_content"
+            item["type"] = "post_content"
             item["channel"] = "facebook"
             item["url"] = content_url
             item["publish_time"] = p_time
@@ -1790,7 +1790,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
             else:
                 share_content = []
 
-            item["type"] = "potential_post_content"
+            item["type"] = "post_content"
             item["channel"] = "facebook"
             item["url"] = content_url
             item["publish_time"] = p_time
@@ -2184,7 +2184,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
                 p_time = ""
             # print('p_time---->', p_time)
 
-            item["type"] = "potential_post_content"
+            item["type"] = "post_content"
             item["channel"] = "facebook"
             item["url"] = content_url
             item["publish_time"] = p_time

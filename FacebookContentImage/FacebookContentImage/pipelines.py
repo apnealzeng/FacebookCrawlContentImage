@@ -8,6 +8,7 @@
 import datetime
 import logging
 import re
+from urllib import parse
 
 import pymongo
 import pytz
@@ -29,10 +30,8 @@ class FacebookcontentimagePipeline:
 
 class FacebookMongoDB(object):
     def open_spider(self, spider):
-        self.conn = pymongo.MongoClient(
-            MONGO_HOST,
-            MONGO_PORT
-        )
+        conn_str = f'mongodb://{parse.quote_plus(MONGO_USERNAME)}:{parse.quote_plus(MONGO_PASSWORD)}@{MONGO_HOST}:{MONGO_PORT}/?authSource=admin&authMechanism=SCRAM-SHA-256'
+        self.conn = pymongo.MongoClient(conn_str)
 
     def process_item(self, item, spider):
         print("--------", item.keys())
@@ -43,8 +42,11 @@ class FacebookMongoDB(object):
         elif item['col'] in ['brand_kol_list']:
             db_name = 'brand_'
             db = self.conn['brand_buffer']
+        elif item['col'] in ['potential_kol_list']:
+            db_name = 'brand_'
+            db = self.conn['potential_buffer']
         str_dict = {
-            "type": item["type"],
+            "type": db_name + item["type"],
             "channel": item["channel"],
             "url": item["url"],
             "publish_time": item["publish_time"],
@@ -55,8 +57,6 @@ class FacebookMongoDB(object):
             "store_time_log": item["store_time_log"],
             "data": item["data"]
         }
-
-        db.authenticate(MONGO_USERNAME, MONGO_PASSWORD, source='admin', mechanism='SCRAM-SHA-256')
 
         myset = db[MONGO_SET_2]
 
