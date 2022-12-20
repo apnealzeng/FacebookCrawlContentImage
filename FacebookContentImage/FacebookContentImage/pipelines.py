@@ -276,3 +276,8 @@ class VideoDownload(FilesPipeline):
     def item_completed(self, results, item, info):
         return item
 
+
+class A(ImagesPipeline):
+
+    def get_media_requests(self, item, info):
+        print(item)

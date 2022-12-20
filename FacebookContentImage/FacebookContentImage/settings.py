@@ -66,9 +66,9 @@ DOWNLOAD_DELAY = 0.1
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'FacebookContentImage.pipelines.FacebookcontentimagePipeline': 300,
-   #  'FacebookContentImage.pipelines.FacebookcontentimagePipeline': 301,
-    'FacebookContentImage.pipelines.ImageDownload': 302,
+   # 'FacebookContentImage.pipelines.FacebookcontentimagePipeline': 300,
+    'FacebookContentImage.pipelines.FacebookcontentimagePipeline': 302,
+    'FacebookContentImage.pipelines.FacebookMongoDB': 301,
    'FacebookContentImage.pipelines.VideoDownload': 303
 }
 
@@ -98,7 +98,7 @@ MONGO_HOST = "192.168.3.50"
 MONGO_PORT = 27017
 MONGO_USERNAME = "developer01"
 MONGO_PASSWORD = "&lz3s3hf1#"
-MONGO_SET_2 = "facebook_image_new"
+MONGO_SET_2 = "facebook_image_new_1"
 MONGO_SET_OLD = "facebook_image"
 
 # google storage bucket
