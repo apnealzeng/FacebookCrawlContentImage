@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "kooler-crawler-gateway",
+  "private_key_id": "b36dcee7dc33faf9fddd9228d27d1a899d634fd7",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC6ehG22x7qD0JX\nlnA1t70d12snU1IRUZBc0u6+srjcAzvKKVa3dh5hUKejP7mrsWSFq3KbBrqgItT0\nKVBgDDYdy4Fb/uR5ugrPYbf/zOxBib6Pd1lGCwxmvg6Iy6Riue7WcAbikqvKUbEk\ngiiU7ucWZFg4o3Rtthf5QJT+npvbZ/AwMqIsnDavLy6qBByHkaKSOcZBnE3mFBas\np+1mXiR47GbRrUKlqTgJzjYawtwY7fLp2zsfn/wA6vWAiRKEH+V9LfKLqhkpkpIp\nQclcL4jt7mnZ7KPE4dc29dZ4WnGS0m7pltcJ/JyXTkh+Pvw3CyUib3eeu6mVPlws\nCGL/M1GFAgMBAAECggEACVAZXGF7HMNgU9F+jyA7AKeGgXNG0Pia1hfutnVkiBBd\nRw5jd0wd3kxR4vRGyI1WcNqMIbPnVCIJMpxxmCpj9X75WefT70RcT9kYgFzym59O\ndgnG2pmop+TsAubwscGJbQoxPdWHYNZNm34omq+HuPWP9lwrb2M9tUQFbOXs8Lsd\nTXbslciIY44u0JJOi6MUyzDwWXxfKyEB1PDxjIj74GjoSiKfGIJElyiPw3Ob1R4g\nyxTgZMSx0Kg2mxQOmITdy4YLYbMyE+XHRfSwYCbpDJisKnFI3UetAhSapLEUVYpf\nbKWUa+V8dOdAgS97K+qb3OAFkS7gEz+QGQ2DwB75AQKBgQDg/CshS8TTQahgC/or\nrhLnVtrGS9gIl7NV63JjTglajCdo/I9uZkV5tanAn9MWXXqvrAH0aJ1N6TpODwjt\nSz3awZQdLt5kni6y70Dn/ifw+g43EcCHMUphs5LdflUy/6+VkmES6U0XNIURnsrH\nRmQGcaIGvv0R6BdbxI1oPxZoQQKBgQDULu10JunVdZ3GCGcWKbIB1uKEMIdKHcrR\nBxLF+IixGYaZUmzPEz9diuGrNqAMYeV27P/gq9GX2g3J1eCwZq5lHqJx0Fp3X12t\n+LI/ZR/7KzIv4QJ6FA7LLbFJwBWW6PYwyMdl/zdurEDaOzO6qGYPyrNwT3rqaz6s\ngkKt+Js4RQKBgQCHk85V2Tf56nYRswYFrnebyv45QtkjjG84lpKu/wap9w2EubWh\nXKX/SxbJikaFEr3tAOWIqEYq/iHxiiPiA1Z57e9YirbfwWb40y603rapA7bvPpZb\nobtmFvWo3glvmx7vLm+rGsYm9rI9xQgDgAqky3NNR2hvkwIIffCM4n+ZQQKBgQDI\ncZiCLKyjqVulk5SG3Fa75BrSk+GKg8BwXMVAXfwLibicqL//kwg+Pw/WpWDmsaiL\nA3Lp9IaodCaocDK1khrXjewZpqF/uYiO66y/tLFUnkbn8iFb4AzlpcGgkSQUDvlb\ntqCf20yrcXBGeLzybVkVPADtbTgJscxgPSHupTdFHQKBgChiRp2WsP4djrT4VwNv\n7rrcvwOL8LYuwgGDvuhwsBO3Xw/FkhRdDcYSZMjyqF1G8LTw0oPVub93IQsHl/J+\n7SySac5JNhNomuZczAlsxXb6qxxOH7K3JOpjNBbDNHA+Gp1WdXxlNM/AmovmSrUo\n9DmyDuRmiEQaktI1ve84aB3f\n-----END PRIVATE KEY-----\n",
+  "client_email": "gsc-kcg-storage01@kooler-crawler-gateway.iam.gserviceaccount.com",
+  "client_id": "109090918122403295758",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/gsc-kcg-storage01%40kooler-crawler-gateway.iam.gserviceaccount.com"
+}

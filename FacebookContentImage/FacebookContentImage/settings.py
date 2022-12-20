@@ -68,7 +68,7 @@ DOWNLOAD_DELAY = 0.1
 ITEM_PIPELINES = {
    # 'FacebookContentImage.pipelines.FacebookcontentimagePipeline': 300,
     'FacebookContentImage.pipelines.FacebookcontentimagePipeline': 302,
-    'FacebookContentImage.pipelines.FacebookMongoDB': 301,
+    # 'FacebookContentImage.pipelines.FacebookMongoDB': 301,
    'FacebookContentImage.pipelines.VideoDownload': 303
 }
 
