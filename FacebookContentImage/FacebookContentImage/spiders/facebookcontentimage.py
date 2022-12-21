@@ -76,6 +76,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
         # data_lst = self.client["potential_buffer"]["facebook_image"].find({"url": {"$regex": "story_fbid="}})
         data_lst = [
             {
+                # "url": "https://www.facebook.com/moonly.wong/videos/703344290952102/"
                 "url": "https://www.facebook.com/nicky.smart3/videos/773597436976137/"
             }
                     ]
@@ -1868,23 +1869,52 @@ class FacebookcontentimageSpider(scrapy.Spider):
         """
         # 解析视频url
         item = FacebookcontentimageItem()
+        data = {}
+        # with open('video_text.txt', 'w', encoding='utf-8') as f:
+        #     f.write(response.text)
         try:
             text_d = re.findall(r'"__bbox":{"complete":false,"result":{"data":{"video":(.*?)\}\}\]\]',
                                 response.text)
         except Exception as e:
             text_d = []
+        try:
+            text_d_1 = re.findall(r'{"__bbox":{"complete":false,"result":(.*?)\}\}\]\]', response.text)
+        except Exception as e:
+            text_d_1 = []
+        # print(text_d)
+
+        for t in text_d_1:
+            try:
+                # j_text = re.findall(r'__bbox":(.*?)\}\}\]\],\[', i)[0] + '}'
+                j_text_1 = '{"complete":true,"result":' + t + '}'
+            except Exception as e:
+                j_text_1 = ''
+
+            json_t = json.loads(j_text_1)
+
+            if json_t.get("result"):
+                if json_t.get("result").get("data"):
+                    if json_t.get("result").get("data"):
+                        print('---index---', text_d_1.index(t))
+                        if json_t.get("result").get("data").get("tahoe_sidepane_renderer"):
+                            print('index---', text_d_1.index(t))
+                            json_t_1 = {}
+                            for i in text_d:
+                                try:
+                                    # j_text = re.findall(r'__bbox":(.*?)\}\}\]\],\[', i)[0] + '}'
+                                    j_text_2 = '{"complete":true,"result":{"data":{"node":' + i + '}'
+                                except Exception as e:
+                                    j_text_2 = ''
+
+                                json_t_1 = json.loads(j_text_2)
+
+                            data = self.parse_video_second(json_t, json_t_1)
 
         for i in text_d:
             try:
-                # j_text = re.findall(r'__bbox":(.*?)\}\}\]\],\[', i)[0] + '}'
                 j_text = '{"complete":true,"result":{"data":{"node":' + i + '}'
             except Exception as e:
                 j_text = ''
-
-            # print("j_text------>", j_text)
-
-            # with open('user_lst.json.', 'w', encoding='utf-8') as f:
-            #     f.write(j_text)
 
             first_data = json.loads(j_text)
 
@@ -1899,295 +1929,16 @@ class FacebookcontentimageSpider(scrapy.Spider):
                     v_text = first_data["result"]["data"]["node"]
                 except Exception as e:
                     v_text = first_data["result"]["data"]["user"]["timeline_feed_units"]["edges"][0]["node"]
-            feedback_context = v_text["creation_story"]["feedback_context"]
-            attachments = v_text["creation_story"]["attachments"]
-            # 贴文内容
-            try:
-                content_text = attachments[0]["media"]["savable_description"]["text"]
-            except Exception as e:
-                content_text = ""
-            # feedback_id 获取
 
-            # 贴文ID
-            try:
-                content_id = attachments[0]["media"]["id"]
-            except Exception as e:
-                content_id = ""
+            if v_text["creation_story"].get("feedback_context"):
+                print("success----", text_d.index(i))
+                data = self.parse_video_first(first_data)
 
-            # 贴文图片
-            content_img_info_lst = list()
-            content_img_id = attachments[0]["media"]["preferred_thumbnail"]["id"]
-            content_img_url = attachments[0]["media"]["preferred_thumbnail"]["image"]["uri"]
-            image_path = IMAGES_STORE + "potential_buffer" + '/facebook/' + 'content/img' + '/%s' % str(
-                content_id) + '/%s' % str(content_img_id) + '.jpg'
-            content_img_info_lst.append(
-                {
-                    "id": content_img_id,
-                    "url": content_img_url,
-                    "path": image_path
-                }
-            )
-            # 转载链接
-            # 帖子视频
-            content_video_info_lst = list()
-            content_video_id = attachments[0]["media"]["id"]
-            content_video_url = attachments[0]["media"]["playable_url"]
-            video_path = IMAGES_STORE + "potential_buffer" + '/facebook/' + 'content/video' + '/%s' % str(
-                content_id) + '/%s' % str(content_video_id) + '.mp4'
-            content_video_info_lst.append(
-                {
-                    "id": content_video_id,
-                    "url": content_video_url,
-                    "path": video_path
-                }
-            )
-            # 帖子创建时间
-            try:
-                content_time = attachments[0]["publish_time"]
-            except Exception as e:
-                content_time = 0
-
-            # 帖子的url
-            content_url = feedback_context["feedback_target_with_context"]["url"]
-            # 帖子的点赞数
-
-            # 帖子的评论数
-            comment_count = feedback_context["feedback_target_with_context"]["comment_count"]["total_count"]
-            # 帖子的分享数
-
-            # 转发内容待定
-
-            # 转发的user_id
-
-            # 转发内容的图片
-
-            # 转发的视频
-
-            # 情绪反应人处理
-            r_lst = list()
-            reactions_count = dict()
-            try:
-                ufi_action_renderers_lst = feedback_context["feedback_target_with_context"]["ufi_action_renderers"]
-                for ufi_action_renderers in ufi_action_renderers_lst:
-                    if ufi_action_renderers.get("feedback"):
-                        reactions_lst = ufi_action_renderers["feedback"]["top_reactions"]["edges"]
-            except Exception as e:
-                reactions_lst = []
-
-            for reactions in reactions_lst:
-                if reactions["node"].get('id'):
-                    if reactions["node"].get("id") == '1635855486666999':
-                        like_count = reactions["reaction_count"]
-                        reactions_count['like_count'] = like_count
-                        r_lst.append(
-                            {
-                                "typecode": "like",
-                                "detail": [
-                                    {
-                                        "num": like_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-                    elif reactions["node"].get("id") == '1678524932434102':
-                        love_count = reactions["reaction_count"]
-                        reactions_count['love_count'] = love_count
-                        r_lst.append(
-                            {
-                                "typecode": "love",
-                                "detail": [
-                                    {
-                                        "num": love_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-                    elif reactions["node"].get("id") == '444813342392137':
-                        angry_count = reactions["reaction_count"]
-                        reactions_count['angry_count'] = angry_count
-                        r_lst.append(
-                            {
-                                "typecode": "anger",
-                                "detail": [
-                                    {
-                                        "num": angry_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-                    elif reactions["node"].get("id") == '613557422527858':
-                        care_count = reactions["reaction_count"]
-                        reactions_count['care_count'] = care_count
-                        r_lst.append(
-                            {
-                                "typecode": "care",
-                                "detail": [
-                                    {
-                                        "num": care_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-                    elif reactions["node"].get("id") == '115940658764963':
-                        haha_count = reactions["reaction_count"]
-                        reactions_count['haha_count'] = haha_count
-                        r_lst.append(
-                            {
-                                "typecode": "happy",
-                                "detail": [
-                                    {
-                                        "num": haha_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-                    elif reactions["node"].get("id") == '478547315650144':
-                        wow_count = reactions["reaction_count"]
-                        reactions_count['wow_count'] = wow_count
-                        r_lst.append(
-                            {
-                                "typecode": "wow",
-                                "detail": [
-                                    {
-                                        "num": wow_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-                    elif reactions["node"].get("id") == '908563459236466':
-                        sad_count = reactions["reaction_count"]
-                        reactions_count['sad_count'] = sad_count
-                        r_lst.append(
-                            {
-                                "typecode": "sad",
-                                "detail": [
-                                    {
-                                        "num": sad_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-
-                elif reactions["node"].get('reaction_type'):
-                    if reactions["node"].get('reaction_type') == 'LIKE':
-                        like_count = reactions["reaction_count"]
-                        reactions_count['like_count'] = like_count
-                        r_lst.append(
-                            {
-                                "typecode": "like",
-                                "detail": [
-                                    {
-                                        "num": like_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-                    elif reactions["node"].get("reaction_type") == 'LOVE':
-                        love_count = reactions["reaction_count"]
-                        reactions_count['love_count'] = love_count
-                        r_lst.append(
-                            {
-                                "typecode": "love",
-                                "detail": [
-                                    {
-                                        "num": love_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-                    elif reactions["node"].get("reaction_type") == 'ANGRY':
-                        angry_count = reactions["reaction_count"]
-                        reactions_count['angry_count'] = angry_count
-                        r_lst.append(
-                            {
-                                "typecode": "anger",
-                                "detail": [
-                                    {
-                                        "num": angry_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-                    elif reactions["node"].get("reaction_type") == 'CARE':
-                        care_count = reactions["reaction_count"]
-                        reactions_count['care_count'] = care_count
-                        r_lst.append(
-                            {
-                                "typecode": "care",
-                                "detail": [
-                                    {
-                                        "num": care_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-                    elif reactions["node"].get("reaction_type") == 'HAHA':
-                        haha_count = reactions["reaction_count"]
-                        reactions_count['haha_count'] = haha_count
-                        r_lst.append(
-                            {
-                                "typecode": "happy",
-                                "detail": [
-                                    {
-                                        "num": haha_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-                    elif reactions["node"].get("reaction_type") == 'WOW':
-                        wow_count = reactions["reaction_count"]
-                        reactions_count['wow_count'] = wow_count
-                        r_lst.append(
-                            {
-                                "typecode": "wow",
-                                "detail": [
-                                    {
-                                        "num": wow_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-                    elif reactions["node"].get("reaction_type") == 'SAD':
-                        sad_count = reactions["reaction_count"]
-                        reactions_count['sad_count'] = sad_count
-
-                        r_lst.append(
-                            {
-                                "typecode": "sad",
-                                "detail": [
-                                    {
-                                        "num": sad_count,
-                                        "updatetime": self.times
-                                    }
-                                ]
-                            }
-                        )
-            try:
-                time1 = datetime.datetime.utcfromtimestamp(int(content_time)).replace(
-                    microsecond=0) + datetime.timedelta(hours=8)
-
-                p_time = time1.astimezone(self.beijing).isoformat()
-            except Exception as e:
-                p_time = ""
-            # print('p_time---->', p_time)
-
+        if data:
             item["type"] = "post_content"
             item["channel"] = "facebook"
-            item["url"] = content_url
-            item["publish_time"] = p_time
+            item["url"] = data["content_url"]
+            item["publish_time"] = data["p_time"]
             item["platform_id"] = response.meta['user_id']
             item["crawl_time"] = self.times
             item["store_time"] = self.times
@@ -2197,7 +1948,7 @@ class FacebookcontentimageSpider(scrapy.Spider):
             item["store_time_log"] = [
                 self.times
             ]
-            brand_mention_str_lst = re.findall(r'@(\w+)', content_text)
+            brand_mention_str_lst = re.findall(r'@(\w+)', data["content_text"])
 
             if brand_mention_str_lst:
                 brand_mention = [
@@ -2215,45 +1966,728 @@ class FacebookcontentimageSpider(scrapy.Spider):
                 brand_mention = []
 
             item["data"] = {
-                "content_id": content_id,
+                "content_id": data["content_id"],
                 "homepage_url": "",
-                "hash_tag": re.findall(r'#(\w+)', content_text),
+                "hash_tag": re.findall(r'#(\w+)', data["content_text"]),
                 "lang": "",
-                "title": self.update_title(content_text),
+                "title": self.update_title(data["content_text"]),
                 "sub_title": "",
-                "content": content_text,
+                "content": data["content_text"],
                 "other_content": [],
                 "brand_mention": brand_mention,
                 "content_level": "0",
                 "share_content": [],
-                "image_info": content_img_info_lst,
-                "video_info": content_video_info_lst,
+                "image_info": data["content_img_info_lst"],
+                "video_info": data["content_video_info_lst"],
                 "sn_interact_num": [
                                        {
                                            "typecode": "comment",
                                            "detail": [
                                                {
-                                                   "num": comment_count,
-                                                   "updatetime": self.times
-                                               }
-                                           ]
-                                       },
-                                       {
-                                           "typecode": "share",
-                                           "detail": [
-                                               {
-                                                   "num": 0,
+                                                   "num": data["comment_count"],
                                                    "updatetime": self.times
                                                }
                                            ]
                                        }
-                                   ] + r_lst
+                                   ] + data["r_lst"]
 
             }
 
             item["col"] = "potential_kol_list"
 
             yield item
+
+    def parse_video_first(self, json_data):
+        """
+        解析视频第一种情况
+        :param json_data:
+        :return: dict_data
+        """
+        dict_data = dict()
+        try:
+            v_text = json_data["result"]["data"]["node"][0]
+        except Exception as e:
+            v_text = ''
+
+        if not v_text:
+
+            try:
+                v_text = json_data["result"]["data"]["node"]
+            except Exception as e:
+                v_text = json_data["result"]["data"]["user"]["timeline_feed_units"]["edges"][0]["node"]
+        try:
+            feedback_context = v_text["creation_story"]["feedback_context"]
+        except Exception as e:
+            feedback_context = v_text
+        try:
+            attachments = v_text["creation_story"]["attachments"]
+        except Exception as e:
+            attachments = v_text
+        # 贴文内容
+        try:
+            content_text = attachments[0]["media"]["savable_description"]["text"]
+        except Exception as e:
+            content_text = ""
+
+        dict_data["content_text"] = content_text
+
+        # feedback_id 获取
+
+        # 贴文ID
+        try:
+            content_id = attachments[0]["media"]["id"]
+        except Exception as e:
+            content_id = ""
+
+        dict_data["content_id"] = content_id
+
+        # 贴文图片
+        content_img_info_lst = list()
+        content_img_id = attachments[0]["media"]["preferred_thumbnail"]["id"]
+        content_img_url = attachments[0]["media"]["preferred_thumbnail"]["image"]["uri"]
+        image_path = IMAGES_STORE + "potential_buffer" + '/facebook/' + 'content/img' + '/%s' % str(
+            content_id) + '/%s' % str(content_img_id) + '.jpg'
+        content_img_info_lst.append(
+            {
+                "id": content_img_id,
+                "url": content_img_url,
+                "path": image_path
+            }
+        )
+
+        dict_data["content_img_info_lst"] = content_img_info_lst
+
+        # 转载链接
+        # 帖子视频
+        content_video_info_lst = list()
+        content_video_id = attachments[0]["media"]["id"]
+        content_video_url = attachments[0]["media"]["playable_url"]
+        video_path = IMAGES_STORE + "potential_buffer" + '/facebook/' + 'content/video' + '/%s' % str(
+            content_id) + '/%s' % str(content_video_id) + '.mp4'
+        content_video_info_lst.append(
+            {
+                "id": content_video_id,
+                "url": content_video_url,
+                "path": video_path
+            }
+        )
+
+        dict_data["content_video_info_lst"] = content_video_info_lst
+
+        # 帖子创建时间
+        try:
+            content_time = attachments[0]["publish_time"]
+        except Exception as e:
+            content_time = 0
+
+        dict_data["content_time"] = content_time
+
+        # 帖子的url
+        content_url = feedback_context["feedback_target_with_context"]["url"]
+
+        dict_data["content_url"] = content_url
+
+        # 帖子的点赞数
+
+        # 帖子的评论数
+        comment_count = feedback_context["feedback_target_with_context"]["comment_count"]["total_count"]
+
+        dict_data["comment_count"] = comment_count
+
+        # 帖子的分享数
+
+        # 转发内容待定
+
+        # 转发的user_id
+
+        # 转发内容的图片
+
+        # 转发的视频
+
+        # 情绪反应人处理
+        r_lst = list()
+        reactions_count = dict()
+        try:
+            ufi_action_renderers_lst = feedback_context["feedback_target_with_context"]["ufi_action_renderers"]
+            for ufi_action_renderers in ufi_action_renderers_lst:
+                if ufi_action_renderers.get("feedback"):
+                    reactions_lst = ufi_action_renderers["feedback"]["top_reactions"]["edges"]
+        except Exception as e:
+            reactions_lst = []
+
+        for reactions in reactions_lst:
+            if reactions["node"].get('id'):
+                if reactions["node"].get("id") == '1635855486666999':
+                    like_count = reactions["reaction_count"]
+                    reactions_count['like_count'] = like_count
+                    r_lst.append(
+                        {
+                            "typecode": "like",
+                            "detail": [
+                                {
+                                    "num": like_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("id") == '1678524932434102':
+                    love_count = reactions["reaction_count"]
+                    reactions_count['love_count'] = love_count
+                    r_lst.append(
+                        {
+                            "typecode": "love",
+                            "detail": [
+                                {
+                                    "num": love_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("id") == '444813342392137':
+                    angry_count = reactions["reaction_count"]
+                    reactions_count['angry_count'] = angry_count
+                    r_lst.append(
+                        {
+                            "typecode": "anger",
+                            "detail": [
+                                {
+                                    "num": angry_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("id") == '613557422527858':
+                    care_count = reactions["reaction_count"]
+                    reactions_count['care_count'] = care_count
+                    r_lst.append(
+                        {
+                            "typecode": "care",
+                            "detail": [
+                                {
+                                    "num": care_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("id") == '115940658764963':
+                    haha_count = reactions["reaction_count"]
+                    reactions_count['haha_count'] = haha_count
+                    r_lst.append(
+                        {
+                            "typecode": "happy",
+                            "detail": [
+                                {
+                                    "num": haha_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("id") == '478547315650144':
+                    wow_count = reactions["reaction_count"]
+                    reactions_count['wow_count'] = wow_count
+                    r_lst.append(
+                        {
+                            "typecode": "wow",
+                            "detail": [
+                                {
+                                    "num": wow_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("id") == '908563459236466':
+                    sad_count = reactions["reaction_count"]
+                    reactions_count['sad_count'] = sad_count
+                    r_lst.append(
+                        {
+                            "typecode": "sad",
+                            "detail": [
+                                {
+                                    "num": sad_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+
+            elif reactions["node"].get('reaction_type'):
+                if reactions["node"].get('reaction_type') == 'LIKE':
+                    like_count = reactions["reaction_count"]
+                    reactions_count['like_count'] = like_count
+                    r_lst.append(
+                        {
+                            "typecode": "like",
+                            "detail": [
+                                {
+                                    "num": like_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("reaction_type") == 'LOVE':
+                    love_count = reactions["reaction_count"]
+                    reactions_count['love_count'] = love_count
+                    r_lst.append(
+                        {
+                            "typecode": "love",
+                            "detail": [
+                                {
+                                    "num": love_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("reaction_type") == 'ANGRY':
+                    angry_count = reactions["reaction_count"]
+                    reactions_count['angry_count'] = angry_count
+                    r_lst.append(
+                        {
+                            "typecode": "anger",
+                            "detail": [
+                                {
+                                    "num": angry_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("reaction_type") == 'CARE':
+                    care_count = reactions["reaction_count"]
+                    reactions_count['care_count'] = care_count
+                    r_lst.append(
+                        {
+                            "typecode": "care",
+                            "detail": [
+                                {
+                                    "num": care_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("reaction_type") == 'HAHA':
+                    haha_count = reactions["reaction_count"]
+                    reactions_count['haha_count'] = haha_count
+                    r_lst.append(
+                        {
+                            "typecode": "happy",
+                            "detail": [
+                                {
+                                    "num": haha_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("reaction_type") == 'WOW':
+                    wow_count = reactions["reaction_count"]
+                    reactions_count['wow_count'] = wow_count
+                    r_lst.append(
+                        {
+                            "typecode": "wow",
+                            "detail": [
+                                {
+                                    "num": wow_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("reaction_type") == 'SAD':
+                    sad_count = reactions["reaction_count"]
+                    reactions_count['sad_count'] = sad_count
+
+                    r_lst.append(
+                        {
+                            "typecode": "sad",
+                            "detail": [
+                                {
+                                    "num": sad_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+
+        dict_data["r_lst"] = r_lst
+
+        try:
+            time1 = datetime.datetime.utcfromtimestamp(int(content_time)).replace(
+                microsecond=0) + datetime.timedelta(hours=8)
+
+            p_time = time1.astimezone(self.beijing).isoformat()
+        except Exception as e:
+            p_time = ""
+
+        dict_data["p_time"] = p_time
+
+        return dict_data
+
+    def parse_video_second(self, json_data, json_data_1=None):
+        """
+        解析视频的第二种格式
+        :param json_data_1: 解析视频第一种参数
+        :param json_data:解析视频第二种参数
+        :return: dict_data
+        """
+        dict_data = dict()
+        r_lst = list()
+        try:
+            v_text = json_data["result"]["data"]["tahoe_sidepane_renderer"]
+        except Exception as e:
+            v_text = ''
+
+        try:
+            v_text_1 = json_data_1["result"]["data"]["node"]
+        except Exception as e:
+            v_text_1 = ''
+
+        # 贴文内容
+        try:
+            content_text = v_text["video"]["creation_story"]["comet_sections"]["message"]["story"]["message"]["text"]
+        except Exception as e:
+            content_text = ""
+
+        dict_data["content_text"] = content_text
+
+        # feedback_id 获取
+
+        # 贴文ID
+        try:
+            content_id = v_text["video"]["id"]
+        except Exception as e:
+            content_id = ""
+
+        dict_data["content_id"] = content_id
+
+        # 贴文图片
+        content_img_info_lst = list()
+
+        content_img_id = v_text_1["preferred_thumbnail"]["id"]
+        content_img_url = v_text_1["preferred_thumbnail"]["image"]["uri"]
+        image_path = IMAGES_STORE + "potential_buffer" + '/facebook/' + 'content/img' + '/%s' % str(
+            content_id) + '/%s' % str(content_img_id) + '.jpg'
+        content_img_info_lst.append(
+            {
+                "id": content_img_id,
+                "url": content_img_url,
+                "path": image_path
+            }
+        )
+
+        dict_data["content_img_info_lst"] = content_img_info_lst
+
+        # 转载链接
+        # 帖子视频
+        content_video_info_lst = list()
+        content_video_id = v_text_1["id"]
+        content_video_url = v_text_1["playable_url"]
+        video_path = IMAGES_STORE + "potential_buffer" + '/facebook/' + 'content/video' + '/%s' % str(
+            content_id) + '/%s' % str(content_video_id) + '.mp4'
+        content_video_info_lst.append(
+            {
+                "id": content_video_id,
+                "url": content_video_url,
+                "path": video_path
+            }
+        )
+
+        dict_data["content_video_info_lst"] = content_video_info_lst
+
+        # 帖子创建时间
+        try:
+            content_time = v_text_1["publish_time"]
+        except Exception as e:
+            content_time = 0
+
+        dict_data["content_time"] = content_time
+
+        # 帖子的url
+        content_url = v_text_1["url"]
+
+        dict_data["content_url"] = content_url
+
+        # 帖子的点赞数
+
+        # 帖子的评论数
+        comment_count = v_text["video"]["feedback"]["comment_count"]["total_count"]
+
+        dict_data["comment_count"] = comment_count
+
+        # 帖子的分享数
+        share_count = v_text["video"]["feedback"]["share_count"]["count"]
+
+        r_lst.append(
+            {
+                "typecode": "share",
+                "detail": [
+                    {
+                        "num": share_count,
+                        "updatetime": self.times
+                    }
+                ]
+            }
+        )
+
+        # 帖子观看数
+        view_count = v_text["video"]["feedback"]["video_view_count"]
+
+        r_lst.append(
+            {
+                "typecode": "video_view",
+                "detail": [
+                    {
+                        "num": view_count,
+                        "updatetime": self.times
+                    }
+                ]
+            }
+        )
+
+        # 转发内容待定
+
+        # 转发的user_id
+
+        # 转发内容的图片
+
+        # 转发的视频
+
+        # 情绪反应人处理
+        reactions_count = dict()
+        try:
+
+            reactions_lst = v_text["video"]["feedback"]["top_reactions"]["edges"]
+        except Exception as e:
+            reactions_lst = []
+        if not reactions_lst:
+            try:
+                reactions_lst = v_text["video"]["feedback"]["cannot_see_top_custom_reactions"]["top_reactions"]["edges"]
+            except Exception as e:
+                reactions_lst = []
+
+        for reactions in reactions_lst:
+            if reactions["node"].get('id'):
+                if reactions["node"].get("id") == '1635855486666999':
+                    like_count = reactions["reaction_count"]
+                    reactions_count['like_count'] = like_count
+                    r_lst.append(
+                        {
+                            "typecode": "like",
+                            "detail": [
+                                {
+                                    "num": like_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("id") == '1678524932434102':
+                    love_count = reactions["reaction_count"]
+                    reactions_count['love_count'] = love_count
+                    r_lst.append(
+                        {
+                            "typecode": "love",
+                            "detail": [
+                                {
+                                    "num": love_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("id") == '444813342392137':
+                    angry_count = reactions["reaction_count"]
+                    reactions_count['angry_count'] = angry_count
+                    r_lst.append(
+                        {
+                            "typecode": "anger",
+                            "detail": [
+                                {
+                                    "num": angry_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("id") == '613557422527858':
+                    care_count = reactions["reaction_count"]
+                    reactions_count['care_count'] = care_count
+                    r_lst.append(
+                        {
+                            "typecode": "care",
+                            "detail": [
+                                {
+                                    "num": care_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("id") == '115940658764963':
+                    haha_count = reactions["reaction_count"]
+                    reactions_count['haha_count'] = haha_count
+                    r_lst.append(
+                        {
+                            "typecode": "happy",
+                            "detail": [
+                                {
+                                    "num": haha_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("id") == '478547315650144':
+                    wow_count = reactions["reaction_count"]
+                    reactions_count['wow_count'] = wow_count
+                    r_lst.append(
+                        {
+                            "typecode": "wow",
+                            "detail": [
+                                {
+                                    "num": wow_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("id") == '908563459236466':
+                    sad_count = reactions["reaction_count"]
+                    reactions_count['sad_count'] = sad_count
+                    r_lst.append(
+                        {
+                            "typecode": "sad",
+                            "detail": [
+                                {
+                                    "num": sad_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+
+            elif reactions["node"].get('reaction_type'):
+                if reactions["node"].get('reaction_type') == 'LIKE':
+                    like_count = reactions["reaction_count"]
+                    reactions_count['like_count'] = like_count
+                    r_lst.append(
+                        {
+                            "typecode": "like",
+                            "detail": [
+                                {
+                                    "num": like_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("reaction_type") == 'LOVE':
+                    love_count = reactions["reaction_count"]
+                    reactions_count['love_count'] = love_count
+                    r_lst.append(
+                        {
+                            "typecode": "love",
+                            "detail": [
+                                {
+                                    "num": love_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("reaction_type") == 'ANGRY':
+                    angry_count = reactions["reaction_count"]
+                    reactions_count['angry_count'] = angry_count
+                    r_lst.append(
+                        {
+                            "typecode": "anger",
+                            "detail": [
+                                {
+                                    "num": angry_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("reaction_type") == 'CARE':
+                    care_count = reactions["reaction_count"]
+                    reactions_count['care_count'] = care_count
+                    r_lst.append(
+                        {
+                            "typecode": "care",
+                            "detail": [
+                                {
+                                    "num": care_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("reaction_type") == 'HAHA':
+                    haha_count = reactions["reaction_count"]
+                    reactions_count['haha_count'] = haha_count
+                    r_lst.append(
+                        {
+                            "typecode": "happy",
+                            "detail": [
+                                {
+                                    "num": haha_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("reaction_type") == 'WOW':
+                    wow_count = reactions["reaction_count"]
+                    reactions_count['wow_count'] = wow_count
+                    r_lst.append(
+                        {
+                            "typecode": "wow",
+                            "detail": [
+                                {
+                                    "num": wow_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+                elif reactions["node"].get("reaction_type") == 'SAD':
+                    sad_count = reactions["reaction_count"]
+                    reactions_count['sad_count'] = sad_count
+
+                    r_lst.append(
+                        {
+                            "typecode": "sad",
+                            "detail": [
+                                {
+                                    "num": sad_count,
+                                    "updatetime": self.times
+                                }
+                            ]
+                        }
+                    )
+
+        dict_data["r_lst"] = r_lst
+
+        try:
+            time1 = datetime.datetime.utcfromtimestamp(int(content_time)).replace(
+                microsecond=0) + datetime.timedelta(hours=8)
+
+            p_time = time1.astimezone(self.beijing).isoformat()
+        except Exception as e:
+            p_time = ""
+
+        dict_data["p_time"] = p_time
+
+        return dict_data
 
     @staticmethod
     def update_title(content):

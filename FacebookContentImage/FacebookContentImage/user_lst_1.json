@@ -1,0 +1,819 @@
+{
+    "complete": true,
+    "result": {
+        "label": "CometTahoeRootQuery$defer$CometTahoeSidepaneRenderer_video",
+        "path": [
+            "video"
+        ],
+        "data": {
+            "tahoe_sidepane_renderer": {
+                "__typename": "DefaultTahoeSidepaneRenderer",
+                "chaining_seed_video": {
+                    "id": "4726434867372698"
+                },
+                "video": {
+                    "__typename": "Video",
+                    "creation_story": {
+                        "shareable": {
+                            "__typename": "Video",
+                            "__isEntity": "Video",
+                            "url": "https://www.facebook.com/firzty/videos/4726434867372698/",
+                            "__isNode": "Video",
+                            "id": "4726434867372698"
+                        },
+                        "id": "UzpfSTEwMDAwMDE4NjkzNDYwODpWSzo0NzI2NDM0ODY3MzcyNjk4",
+                        "attachments": [
+                            {
+                                "comet_footer_renderer": null
+                            }
+                        ],
+                        "comet_sections": {
+                            "message": {
+                                "__typename": "CometFeedStoryDefaultMessageRenderingStrategy",
+                                "story": {
+                                    "message": {
+                                        "text": "อาบน้ำยั่วๆพร้อมแจก สบู่กู๊ดแซงค์ กลูต้า คอลลาเจน โซป",
+                                        "delight_ranges": [],
+                                        "image_ranges": [],
+                                        "inline_style_ranges": [],
+                                        "aggregated_ranges": [],
+                                        "ranges": [
+                                            {
+                                                "entity": {
+                                                    "__typename": "User",
+                                                    "__isEntity": "User",
+                                                    "__isActor": "User",
+                                                    "id": "100069093892106",
+                                                    "url": "https://www.facebook.com/saboogsl",
+                                                    "profile_url": "https://www.facebook.com/saboogsl",
+                                                    "short_name": "สบู่กู๊ดแซงค์ กลูต้า คอลลาเจน โซป",
+                                                    "work_info": null,
+                                                    "__module_operation_CometTextWithEntitiesRelay_textWithEntities": {
+                                                        "__dr": "ProfileGeminiWeakReferenceLink_user$normalization.graphql"
+                                                    },
+                                                    "__module_component_CometTextWithEntitiesRelay_textWithEntities": {
+                                                        "__dr": "ProfileGeminiWeakReferenceLink.react"
+                                                    },
+                                                    "work_foreign_entity_info": null,
+                                                    "mobileUrl": "https://m.facebook.com/saboogsl",
+                                                    "__isNode": "User"
+                                                },
+                                                "entity_is_weak_reference": false,
+                                                "length": 33,
+                                                "offset": 20
+                                            }
+                                        ],
+                                        "color_ranges": []
+                                    },
+                                    "id": "UzpfSTEwMDAwMDE4NjkzNDYwODpWSzo0NzI2NDM0ODY3MzcyNjk4"
+                                },
+                                "__module_operation_CometTahoeVideoContextSectionBody_video": {
+                                    "__dr": "CometTahoeVideoDefaultMessageRenderingStrategy_textWithEntities$normalization.graphql"
+                                },
+                                "__module_component_CometTahoeVideoContextSectionBody_video": {
+                                    "__dr": "CometTahoeVideoDefaultMessageRenderingStrategy.react"
+                                }
+                            },
+                            "footer": null,
+                            "actor_photo": {
+                                "__typename": "CometFeedStoryActorPhotoStrategy",
+                                "__isICometStorySection": "CometFeedStoryActorPhotoStrategy",
+                                "is_prod_eligible": true,
+                                "story": {
+                                    "actors": [
+                                        {
+                                            "__typename": "User",
+                                            "__isActor": "User",
+                                            "id": "100000186934608",
+                                            "__isEntity": "User",
+                                            "url": "https://www.facebook.com/firzty",
+                                            "work_foreign_entity_info": null,
+                                            "work_info": null,
+                                            "story_bucket": {
+                                                "nodes": [
+                                                    {
+                                                        "should_show_close_friend_badge": false,
+                                                        "id": "1509905585794179",
+                                                        "first_story_to_show": null
+                                                    }
+                                                ]
+                                            },
+                                            "profile_url": "https://www.facebook.com/firzty",
+                                            "name": "Firzty Shawatida Kuptawatin",
+                                            "profile_picture": {
+                                                "uri": "https://scontent.fhkg3-1.fna.fbcdn.net/v/t1.6435-1/121618523_4011298308886361_5165713841136517038_n.jpg?stp=cp0_dst-jpg_p40x40&_nc_cat=100&ccb=1-7&_nc_sid=7206a8&_nc_ohc=BiGG6TJgrAkAX8tHDLj&_nc_ht=scontent.fhkg3-1.fna&oh=00_AfC5AO1g2odHKqCGJMgOVmyFUivzXAnsVNhi49hryBzdYw&oe=63C9DAE7",
+                                                "width": 40,
+                                                "height": 40,
+                                                "scale": 1
+                                            },
+                                            "is_additional_profile_plus": false,
+                                            "delegate_page": null
+                                        }
+                                    ],
+                                    "comet_sections": {
+                                        "action_link": null
+                                    },
+                                    "attachments": [
+                                        {
+                                            "action_links": [
+                                                {
+                                                    "__typename": "LiveActionLink"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "sponsored_data": null,
+                                    "id": "UzpfSTEwMDAwMDE4NjkzNDYwODpWSzo0NzI2NDM0ODY3MzcyNjk4"
+                                },
+                                "__module_operation_CometFeedStoryActorPhotoSection_story": {
+                                    "__dr": "CometFeedStoryActorPhotoStrategy_actorPhoto$normalization.graphql"
+                                },
+                                "__module_component_CometFeedStoryActorPhotoSection_story": {
+                                    "__dr": "CometFeedStoryActorPhotoStrategy.react"
+                                }
+                            },
+                            "metadata": [
+                                {
+                                    "__typename": "CometFeedStoryMinimizedTimestampStrategy",
+                                    "__isICometStorySection": "CometFeedStoryMinimizedTimestampStrategy",
+                                    "is_prod_eligible": true,
+                                    "override_url": null,
+                                    "video_override_url": null,
+                                    "story": {
+                                        "creation_time": 1624015432,
+                                        "url": "https://www.facebook.com/firzty/videos/4726434867372698/",
+                                        "ghl_label": null,
+                                        "id": "UzpfSTEwMDAwMDE4NjkzNDYwODpWSzo0NzI2NDM0ODY3MzcyNjk4"
+                                    },
+                                    "__module_operation_CometFeedStoryMetadataSection_story": {
+                                        "__dr": "CometFeedStoryMinimizedTimestampStrategy_timestamp$normalization.graphql"
+                                    },
+                                    "__module_component_CometFeedStoryMetadataSection_story": {
+                                        "__dr": "CometFeedStoryMinimizedTimestampStrategy.react"
+                                    }
+                                },
+                                {
+                                    "__typename": "CometFeedStoryAudienceStrategy",
+                                    "__isICometStorySection": "CometFeedStoryAudienceStrategy",
+                                    "is_prod_eligible": true,
+                                    "story": {
+                                        "privacy_scope": {
+                                            "icon_image": {
+                                                "name": "everyone"
+                                            },
+                                            "description": "公开"
+                                        },
+                                        "id": "UzpfSTEwMDAwMDE4NjkzNDYwODpWSzo0NzI2NDM0ODY3MzcyNjk4"
+                                    },
+                                    "__module_operation_CometFeedStoryMetadataSection_story": {
+                                        "__dr": "CometFeedStoryAudienceStrategy_audience$normalization.graphql"
+                                    },
+                                    "__module_component_CometFeedStoryMetadataSection_story": {
+                                        "__dr": "CometFeedStoryAudienceStrategy.react"
+                                    }
+                                }
+                            ],
+                            "title": {
+                                "__typename": "CometFeedStoryTitleWithActorStrategy",
+                                "__isICometStorySection": "CometFeedStoryTitleWithActorStrategy",
+                                "is_prod_eligible": true,
+                                "story": {
+                                    "id": "UzpfSTEwMDAwMDE4NjkzNDYwODpWSzo0NzI2NDM0ODY3MzcyNjk4",
+                                    "actors": [
+                                        {
+                                            "__typename": "User",
+                                            "name": "Firzty Shawatida Kuptawatin",
+                                            "id": "100000186934608",
+                                            "__isActor": "User",
+                                            "__isEntity": "User",
+                                            "url": "https://www.facebook.com/firzty",
+                                            "work_foreign_entity_info": null,
+                                            "work_info": null
+                                        }
+                                    ],
+                                    "title": {
+                                        "delight_ranges": [],
+                                        "image_ranges": [],
+                                        "inline_style_ranges": [],
+                                        "aggregated_ranges": [],
+                                        "ranges": [
+                                            {
+                                                "entity": {
+                                                    "__typename": "User",
+                                                    "__isEntity": "User",
+                                                    "__isActor": "User",
+                                                    "id": "100000186934608",
+                                                    "url": "https://www.facebook.com/firzty",
+                                                    "profile_url": "https://www.facebook.com/firzty",
+                                                    "short_name": "Firzty Shawatida Kuptawatin",
+                                                    "work_info": null,
+                                                    "__module_operation_CometTextWithEntitiesRelay_textWithEntities": {
+                                                        "__dr": "ProfileGeminiWeakReferenceLink_user$normalization.graphql"
+                                                    },
+                                                    "__module_component_CometTextWithEntitiesRelay_textWithEntities": {
+                                                        "__dr": "ProfileGeminiWeakReferenceLink.react"
+                                                    },
+                                                    "work_foreign_entity_info": null,
+                                                    "mobileUrl": "https://m.facebook.com/firzty",
+                                                    "__isNode": "User"
+                                                },
+                                                "entity_is_weak_reference": false,
+                                                "length": 27,
+                                                "offset": 0
+                                            }
+                                        ],
+                                        "color_ranges": [],
+                                        "text": "Firzty Shawatida Kuptawatin 进行了直播。"
+                                    },
+                                    "comet_sections": {
+                                        "action_link": null,
+                                        "badge": null,
+                                        "follow_button": null
+                                    },
+                                    "encrypted_tracking": "AZUxmHhCtZ3Bqedom0wcP5c02v8Km9cXTgsjaafTxd29TsTYA0i14xar_fhrSsX1CiX4ihETdl0b69TbwPM3SWIJm65yH8d0X8BS-VSoaVpk_EjQHkRuQmqF86aYWQXdAL2qjGBL5eE5Iqnu306NZ0u_d3EfJsn-BjM8Y-zo2Qi96KS2EAwdDDEDtXPSjwRt9jCu0GjytG44MJBibATq76a4QRQp-Eyki1J3jVQvWObCuxdWOouzT-9NVNG03Ath1CUTvfSIs6KPmG9tmUE7Tbozp9EwXowRGeBqVDWtlOwJ7glOMeTNFkgdJ0X5aqCkNcKbQBDwuZ_PD4IojmeBNb-0MbG-QEVom78vHSkI6-kbhUNBxOTBVBXcOM8YkEhoM2wxGHGeqPHZMgjv4SSEzst6UENMJ7AyhER5lboLw85fU-Gu80No1tu17braXlbQkDC3huk4DGlyS97qvW8U4uJivcDfsr1Uc_YigK8YvY2hJWDMKzG761vBIz9BnVC3e-X3ey4G-gI8jK7SffX3yL7PHRS7BXUh6OMKkSwIJxxYAsEiurwGMVeIwTINJZOb-kcZZqczJ2aXwN__FmS66Rut1wB2MRHWKrZZko8gkRglzcqPj_nZ-QGKVVxi9GJsSCLSGCyB11Ix80bY9c0CgW5y8phQ40xcpSoyoB9mg-T6Lv7xMKUokUBcH3UPP8Q-u73XSCinEXVYSB5gqu5aT3TZ5I3qwms0nugCGzKAOiaive7qpPQx42Z4OhzkS59rTOc"
+                                },
+                                "__module_operation_CometFeedStoryTitleSection_story": {
+                                    "__dr": "CometFeedStoryTitleWithActorStrategy_contextTitle$normalization.graphql"
+                                },
+                                "__module_component_CometFeedStoryTitleSection_story": {
+                                    "__dr": "CometFeedStoryTitleWithActorStrategy.react"
+                                }
+                            }
+                        },
+                        "encrypted_tracking": "AZVPiVj54uHhqj7saV7nktLB63c9TsZtKMB29elS0t9G2wdOW_kpVBT4xW9RUNGaXmoROssTg_ZpgYv9nAQewCxMl4GlfOmksCcmcpgbFd6GVPcxS2nUGfVtmf-rrHqJdQ7SM5AwEy-Wrjso-_dJl7ZDtKNbhJsaIzTGE7X0Pp8yjx8CK9tzgIOrm8pqaEU7OwobFt10AkI_BuGdRdg24B7O59TpRQY__3YfUqok63t58w39WVUywkGHCpju__ZKVCZgDWxdb9cYXYPkgSo_1sFrXZ04zZgHmOmXS32As8FWJSmuO7yryHJXQKziV1RntOSVcOi73dRmUl5KvHMPlI67_Kqc2ZOH2J-WPJoS1Rlfh6K0Z-T9-EdnL0al6qkD1gLdHugve6HMnZRBwrqrdx_boPIXkci8WrSRUrYW1N2ozE9Q2ImTNIcnHVnb6Jme0KOjpO49BFDy6nKDzraSbX3lDE28g2aIQKCX6athxlKW7ZRe6AIxhBFKzy11irNlCdq-hPTO9iMrTpyBVUk_Rf19wW9RCVoYFU6TR9hH9k60v7_XJyK4OehlkdBJloQyQxra1qIAU4CK2XqOIDU_Vvy7b01oSQtpXR_hhj-yJmxjsceq9oAEvQEPMv1l6de4X1Ldo4722H55NIU3PFJIWXO-ym1F7LFPw8mNjmWqwzhKaSyPHiMlscaC8hu_bU52J4IwvSVEGmBMnqEWwfUd5V-5T5Qn7OSd5A1Qex67-RMab6Jn4h5RbokdGjeD-_R22tU",
+                        "debug_info": null,
+                        "should_host_actor_link_in_watch": false,
+                        "collaborators": []
+                    },
+                    "id": "4726434867372698",
+                    "is_video_broadcast": true,
+                    "title": {
+                        "delight_ranges": [],
+                        "image_ranges": [],
+                        "inline_style_ranges": [],
+                        "aggregated_ranges": [],
+                        "ranges": [],
+                        "color_ranges": [],
+                        "text": ""
+                    },
+                    "info": null,
+                    "arena": null,
+                    "video_with_tagged_products": null,
+                    "live_audio_messenger_call_link": null,
+                    "recipient_group": null,
+                    "is_gaming_video": false,
+                    "is_huddle": false,
+                    "owner": {
+                        "__typename": "User",
+                        "id": "100000186934608",
+                        "name": "Firzty Shawatida Kuptawatin",
+                        "__isVideoOwner": "User",
+                        "has_professional_features_for_watch": false,
+                        "actor_to_follow": {
+                            "__typename": "User",
+                            "__isActor": "User",
+                            "id": "100000186934608",
+                            "video_channel_is_viewer_following": false
+                        },
+                        "owner_as_page": null,
+                        "__isActor": "User",
+                        "live_video_subscription_status": "SOME",
+                        "subscribe_status": "CAN_SUBSCRIBE"
+                    },
+                    "viewer": {
+                        "actor": {
+                            "is_page_or_profile_plus_actor": false,
+                            "__typename": "User",
+                            "id": "100087744617799"
+                        }
+                    },
+                    "video_product_tags": [],
+                    "is_eligible_for_subscription_gift_purchase": false,
+                    "comet_video_player_live_subscribe_button_renderer": {
+                        "__typename": "CometTahoeLiveSubscribeButtonRenderer",
+                        "video_owner": {
+                            "__typename": "User",
+                            "__isVideoOwner": "User",
+                            "id": "100000186934608",
+                            "name": "Firzty Shawatida Kuptawatin",
+                            "live_video_subscription_status": "SOME",
+                            "live_video_subscription_push_status": "SOME",
+                            "video_channel_is_viewer_following": false
+                        },
+                        "__module_operation_CometTahoeVideoContextSectionHeader_video_comet_video_player_live_subscribe_button_renderer": {
+                            "__dr": "CometTahoeVideoContextSectionLiveNotificationsButton_renderer$normalization.graphql"
+                        },
+                        "__module_component_CometTahoeVideoContextSectionHeader_video_comet_video_player_live_subscribe_button_renderer": {
+                            "__dr": "CometTahoeVideoContextSectionLiveNotificationsButton.react"
+                        }
+                    },
+                    "if_viewer_can_see_woodhenge_sidepane": null,
+                    "copyright_banner_info": null,
+                    "feedback": {
+                        "id": "ZmVlZGJhY2s6NDcyNjQzNDg2NzM3MjY5OA==",
+                        "can_viewer_comment": true,
+                        "can_viewer_react": true,
+                        "if_viewer_can_see_voice_switcher": null,
+                        "disable_reaction_subscriptions": false,
+                        "i18n_reaction_count": "612",
+                        "important_reactors": {
+                            "nodes": []
+                        },
+                        "reaction_count": {
+                            "count": 612,
+                            "is_empty": false
+                        },
+                        "top_reactions": {
+                            "count": 5,
+                            "edges": [
+                                {
+                                    "reaction_count": 483,
+                                    "node": {
+                                        "id": "1635855486666999"
+                                    }
+                                },
+                                {
+                                    "reaction_count": 112,
+                                    "node": {
+                                        "id": "1678524932434102"
+                                    }
+                                },
+                                {
+                                    "reaction_count": 10,
+                                    "node": {
+                                        "id": "478547315650144"
+                                    }
+                                },
+                                {
+                                    "reaction_count": 5,
+                                    "node": {
+                                        "id": "613557422527858"
+                                    }
+                                },
+                                {
+                                    "reaction_count": 2,
+                                    "node": {
+                                        "id": "115940658764963"
+                                    }
+                                }
+                            ]
+                        },
+                        "reaction_display_config": {
+                            "reaction_display_strategy": "NONE",
+                            "reaction_string_with_viewer": null,
+                            "reaction_string_without_viewer": null,
+                            "__module_operation_CometUFIReactionsCount_feedback": {
+                                "__dr": "CometUFIReactionSentence_reactionDisplayConfig$normalization.graphql"
+                            },
+                            "__module_component_CometUFIReactionsCount_feedback": {
+                                "__dr": "CometUFIReactionSentence.react"
+                            }
+                        },
+                        "viewer_actor": {
+                            "__typename": "User",
+                            "id": "100087744617799",
+                            "name": "Neal Zeng",
+                            "profile_picture": {
+                                "uri": "https://scontent.fhkg3-1.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?stp=cp0_dst-png_p24x24&_nc_cat=1&ccb=1-7&_nc_sid=7206a8&_nc_ohc=WiEqPgicvrMAX-GRKqu&_nc_ht=scontent.fhkg3-1.fna&oh=00_AfB412K72UYeDxmcOJnno6UXGnWYFo3YkZ5wrpjd5n7BQQ&oe=63CA02B8"
+                            }
+                        },
+                        "viewer_feedback_reaction_info": null,
+                        "award_count": null,
+                        "can_show_seen_by": false,
+                        "if_viewer_can_see_seen_by_member_list": null,
+                        "if_viewer_cannot_see_seen_by_member_list": {
+                            "i18n_reaction_count": "612",
+                            "reaction_count": {
+                                "count": 612
+                            },
+                            "reaction_display_config": {
+                                "reaction_display_strategy": "NONE"
+                            },
+                            "seen_by": {
+                                "count": null,
+                                "i18n_seen_by_count": null,
+                                "seen_by_everyone": false
+                            },
+                            "__module_operation_CometUFISeenByCount_feedback__if_viewer_cannot_see_seen_by_member_list": {
+                                "__dr": "CometUFISeenByCountText_feedback$normalization.graphql"
+                            },
+                            "__module_component_CometUFISeenByCount_feedback__if_viewer_cannot_see_seen_by_member_list": {
+                                "__dr": "CometUFISeenByCountText.react"
+                            },
+                            "id": "ZmVlZGJhY2s6NDcyNjQzNDg2NzM3MjY5OA=="
+                        },
+                        "i18n_share_count": "47",
+                        "share_count": {
+                            "count": 47,
+                            "is_empty": false
+                        },
+                        "can_see_top_custom_reactions": null,
+                        "cannot_see_top_custom_reactions": {
+                            "reactors": {
+                                "count": 612
+                            },
+                            "viewer_feedback_reaction_info": null,
+                            "id": "ZmVlZGJhY2s6NDcyNjQzNDg2NzM3MjY5OA==",
+                            "top_reactions": {
+                                "edges": [
+                                    {
+                                        "reaction_count": 483,
+                                        "node": {
+                                            "id": "1635855486666999",
+                                            "localized_name": "赞"
+                                        },
+                                        "i18n_reaction_count": "483"
+                                    },
+                                    {
+                                        "reaction_count": 112,
+                                        "node": {
+                                            "id": "1678524932434102",
+                                            "localized_name": "大爱"
+                                        },
+                                        "i18n_reaction_count": "112"
+                                    },
+                                    {
+                                        "reaction_count": 10,
+                                        "node": {
+                                            "id": "478547315650144",
+                                            "localized_name": "哇"
+                                        },
+                                        "i18n_reaction_count": "10"
+                                    },
+                                    {
+                                        "reaction_count": 5,
+                                        "node": {
+                                            "id": "613557422527858",
+                                            "localized_name": "抱抱"
+                                        },
+                                        "i18n_reaction_count": "5"
+                                    },
+                                    {
+                                        "reaction_count": 2,
+                                        "node": {
+                                            "id": "115940658764963",
+                                            "localized_name": "笑趴"
+                                        },
+                                        "i18n_reaction_count": "2"
+                                    }
+                                ]
+                            },
+                            "__module_operation_CometUFITopReactions_feedback__cannot_use_group_custom_reactions": {
+                                "__dr": "CometUFIClassicTopReactions_feedback$normalization.graphql"
+                            },
+                            "__module_component_CometUFITopReactions_feedback__cannot_use_group_custom_reactions": {
+                                "__dr": "CometUFIClassicTopReactions.react"
+                            }
+                        },
+                        "comments_count_summary_renderer": {
+                            "__typename": "TotalCommentsCountSummaryRenderer",
+                            "feedback": {
+                                "id": "ZmVlZGJhY2s6NDcyNjQzNDg2NzM3MjY5OA==",
+                                "comment_count": {
+                                    "total_count": 112
+                                },
+                                "i18n_comment_count": "112"
+                            },
+                            "__module_operation_CometUFISummaryBase_feedback": {
+                                "__dr": "CometUFICommentsCountRenderer_data$normalization.graphql"
+                            },
+                            "__module_component_CometUFISummaryBase_feedback": {
+                                "__dr": "CometUFICommentsCountRenderer.react"
+                            }
+                        },
+                        "associated_video": {
+                            "broadcast_is_ama_enabled": false,
+                            "id": "4726434867372698"
+                        },
+                        "comment_count": {
+                            "is_empty": false,
+                            "total_count": 112
+                        },
+                        "page_private_reply": null,
+                        "story_for_community_awards": null,
+                        "is_fishbowl_post": false,
+                        "video_view_count": 21977,
+                        "video_view_count_renderer": {
+                            "__typename": "UFI2ViewCountRenderer",
+                            "feedback": {
+                                "associated_video": {
+                                    "is_live_streaming": false,
+                                    "is_profile_video": false,
+                                    "id": "4726434867372698"
+                                },
+                                "video_view_count": 21977,
+                                "video_view_count_reduced": "2.1 万",
+                                "total_video_posts": 1,
+                                "video_post_view_count": 21977,
+                                "id": "ZmVlZGJhY2s6NDcyNjQzNDg2NzM3MjY5OA=="
+                            },
+                            "__module_operation_CometUFISummaryBase_feedback__video_view_count": {
+                                "__dr": "UFI2ViewCountRenderer_data$normalization.graphql"
+                            },
+                            "__module_component_CometUFISummaryBase_feedback__video_view_count": {
+                                "__dr": "UFI2ViewCountRenderer.react"
+                            }
+                        },
+                        "story_community_awards_count_interface_renderer": null,
+                        "share_fbid": "4726434867372698",
+                        "voice_switcher_actors": {
+                            "nodes": []
+                        },
+                        "feed_object_identifier": "S:_I100000186934608:VK:4726434867372698",
+                        "if_viewer_can_use_group_custom_reactions_beta": null,
+                        "if_viewer_cannot_use_group_custom_reactions_beta": {
+                            "if_viewer_can_use_group_custom_reactions": null,
+                            "associated_group": null,
+                            "supported_reaction_infos": [
+                                {
+                                    "animation": {
+                                        "uri_keyframes2": "https://scontent.fhkg3-1.fna.fbcdn.net/m1/v/t6/An_KOWvmE8xXhWbKcEDamiAQ14ZKS7T_w5aOTf-M8Krv4ls-f63eecRjpMEIRfwoMQw0XjeM4Q2PKoqtUSQc0_q66s2ahAGa0OTb.kf?ccb=10-5&oh=00_AfA0kdMZLDDpnbcwqHfHrr1Bvfg04NjgUxTh9k4p_rPPwA&oe=63C9DAC0&_nc_sid=55e238"
+                                    },
+                                    "id": "1635855486666999"
+                                },
+                                {
+                                    "animation": {
+                                        "uri_keyframes2": "https://scontent.fhkg3-1.fna.fbcdn.net/m1/v/t6/An-V1eo7VQ3O9lqK2f9nfo3p019W0b_BTfQk8m_WliRJfm8Ss0I6dO39oKJmajreEZ2Oy5vSrTbDg0GpAgj0NSk-Eu5PWtSAd1gv.kf?ccb=10-5&oh=00_AfA33S6_zdA16ZtKwFZNHG48T0Aa02doKg_FWN41L5J9qw&oe=63C9D731&_nc_sid=55e238"
+                                    },
+                                    "id": "1678524932434102"
+                                },
+                                {
+                                    "animation": {
+                                        "uri_keyframes2": "https://scontent.fhkg3-1.fna.fbcdn.net/m1/v/t6/An-epsBkaSJ4n9oYH6L6fSPKlfyvVNR_J7OfeV9-jqOZVx9-Fg73T8WyLTa1e_4iyoSboul40f-XChEvL3RtR-jyPuVfx7Umn4RlQyMS.kf?ccb=10-5&oh=00_AfA1w3pm7_NBShI-8yDC4GCv-izl_2W3CEZHkZCoeLSvjw&oe=63CA0CC7&_nc_sid=55e238"
+                                    },
+                                    "id": "613557422527858"
+                                },
+                                {
+                                    "animation": {
+                                        "uri_keyframes2": "https://scontent.fhkg3-1.fna.fbcdn.net/m1/v/t6/An8CYKC8XqtM-fkmXlVHrp9oVgPgDVVlGZu_Cy7Q_5xW9yYY3lOzMNVDCq9D1ThbbsbnpjfFmGnfIPhKX6oePvUMOYOvShQauKw.kf?ccb=10-5&oh=00_AfCNyMNnQ_08nseclDj6sBarFmuwidrj5lft0sxojJWy_Q&oe=63C9DF0B&_nc_sid=55e238"
+                                    },
+                                    "id": "115940658764963"
+                                },
+                                {
+                                    "animation": {
+                                        "uri_keyframes2": "https://scontent.fhkg3-1.fna.fbcdn.net/m1/v/t6/An_iJw3Cc3y5RtzEpR0M4CCznWN_ywjtFHZENvSbcomn6tH9EuRIjlfe7xaIpEOIEZAGHfQMVNlOPpkGNsG7fM8CslunKANTZ6ED.kf?ccb=10-5&oh=00_AfCTZp2G5Y-qoZvdCz32fl7bwdrdkMkuj5kfZMR0O8r19A&oe=63C9EB58&_nc_sid=55e238"
+                                    },
+                                    "id": "478547315650144"
+                                },
+                                {
+                                    "animation": {
+                                        "uri_keyframes2": "https://scontent.fhkg3-1.fna.fbcdn.net/m1/v/t6/An-4eutqFWFfYhZPQR8tM2oP5E05jWW-J7tvfsD5wE23SUHSA2nXlg1n6fI_KpO3JoITC05bkD6cfuSRG3Fji57z_i1jO4Bw_K_ZEg.kf?ccb=10-5&oh=00_AfBLn51TbMdlEW5J6GjJtP2X936-Yro0BM8fS_0tIIls1Q&oe=63C9DAF0&_nc_sid=55e238"
+                                    },
+                                    "id": "908563459236466"
+                                },
+                                {
+                                    "animation": {
+                                        "uri_keyframes2": "https://scontent.fhkg3-1.fna.fbcdn.net/m1/v/t6/An-ltDiBj6BlExJAIyJiOGWs0CtdQwF9K9SyRSRhTIMgJd0MMzaw7ju3gnTsliPfba99uYjQem5sn3JzgpEnBVKOKfyfbcp-sMBJ.kf?ccb=10-5&oh=00_AfALeX_Ojsfe5HFbji8zLLxkL1EapgUJOiyT5_hVWGSTVQ&oe=63C9F7D7&_nc_sid=55e238"
+                                    },
+                                    "id": "444813342392137"
+                                }
+                            ],
+                            "__module_operation_CometUFIReactionsMenu_feedback__cannot_use_group_custom_reactions_beta": {
+                                "__dr": "CometUFIReactionsMenuClassic_feedback$normalization.graphql"
+                            },
+                            "__module_component_CometUFIReactionsMenu_feedback__cannot_use_group_custom_reactions_beta": {
+                                "__dr": "CometUFIReactionsMenuClassic.react"
+                            },
+                            "id": "ZmVlZGJhY2s6NDcyNjQzNDg2NzM3MjY5OA=="
+                        },
+                        "supported_reaction_infos": [
+                            {
+                                "id": "1635855486666999"
+                            },
+                            {
+                                "id": "1678524932434102"
+                            },
+                            {
+                                "id": "613557422527858"
+                            },
+                            {
+                                "id": "115940658764963"
+                            },
+                            {
+                                "id": "478547315650144"
+                            },
+                            {
+                                "id": "908563459236466"
+                            },
+                            {
+                                "id": "444813342392137"
+                            }
+                        ],
+                        "unified_reactors": {
+                            "count": 612
+                        },
+                        "reactors": {
+                            "count": 612,
+                            "is_empty": false
+                        },
+                        "if_viewer_can_render_group_custom_reactions": null,
+                        "should_show_reshare_warning": false,
+                        "can_see_video_insights": null
+                    }
+                },
+                "__module_operation_CometTahoeSidepaneRenderer_video_sidepane": {
+                    "__dr": "CometTahoeSidePane_tahoeSidepaneRenderer$normalization.graphql"
+                },
+                "__module_component_CometTahoeSidepaneRenderer_video_sidepane": {
+                    "__dr": "CometTahoeSidePane.react"
+                }
+            },
+            "if_viewer_can_see_woodhenge_sidepane": null
+        },
+        "extensions": {
+            "prefetch_uris_v2": [
+                {
+                    "uri": "https://scontent.fhkg3-1.fna.fbcdn.net/v/t1.6435-1/121618523_4011298308886361_5165713841136517038_n.jpg?stp=cp0_dst-jpg_p40x40&_nc_cat=100&ccb=1-7&_nc_sid=7206a8&_nc_ohc=BiGG6TJgrAkAX8tHDLj&_nc_ht=scontent.fhkg3-1.fna&oh=00_AfC5AO1g2odHKqCGJMgOVmyFUivzXAnsVNhi49hryBzdYw&oe=63C9DAE7",
+                    "label": null
+                }
+            ],
+            "prefetch_dash_segments": [
+                {
+                    "video": [
+                        {
+                            "url": "https://scontent.fhkg3-1.fna.fbcdn.net/o1/v/t29/f1/m49/799522460701387.mp4?efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfbGl2ZV9oZF9mcmFnXzJfdmlkZW8ifQ&_nc_ht=scontent.fhkg3-1.fna.fbcdn.net&_nc_cat=108&strext=1&ccb=9-4&oh=00_AfBSOKkpXQwai8nIx2Uer4SjVZ2Jow6QcZXib5pJ-kTwXw&oe=63A3E87A&_nc_sid=57d5c5",
+                            "start": 0,
+                            "end": 905,
+                            "representation_id": "799522460701387v",
+                            "segment_type": "init",
+                            "mime_codec": "video/mp4; codecs=\"avc1.4D401E\""
+                        },
+                        {
+                            "url": "https://scontent.fhkg3-1.fna.fbcdn.net/o1/v/t29/f1/m49/799522460701387.mp4?efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfbGl2ZV9oZF9mcmFnXzJfdmlkZW8ifQ&_nc_ht=scontent.fhkg3-1.fna.fbcdn.net&_nc_cat=108&strext=1&ccb=9-4&oh=00_AfBSOKkpXQwai8nIx2Uer4SjVZ2Jow6QcZXib5pJ-kTwXw&oe=63A3E87A&_nc_sid=57d5c5",
+                            "start": 906,
+                            "end": 10981,
+                            "representation_id": "799522460701387v",
+                            "segment_type": "sidx",
+                            "mime_codec": "video/mp4; codecs=\"avc1.4D401E\""
+                        },
+                        {
+                            "url": "https://scontent.fhkg3-1.fna.fbcdn.net/o1/v/t29/f1/m49/799522460701387.mp4?efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfbGl2ZV9oZF9mcmFnXzJfdmlkZW8ifQ&_nc_ht=scontent.fhkg3-1.fna.fbcdn.net&_nc_cat=108&strext=1&ccb=9-4&oh=00_AfBSOKkpXQwai8nIx2Uer4SjVZ2Jow6QcZXib5pJ-kTwXw&oe=63A3E87A&_nc_sid=57d5c5",
+                            "start": 10982,
+                            "end": 319770,
+                            "representation_id": "799522460701387v",
+                            "segment_type": "data",
+                            "mime_codec": "video/mp4; codecs=\"avc1.4D401E\""
+                        }
+                    ],
+                    "audio": [
+                        {
+                            "url": "https://scontent.fhkg3-1.fna.fbcdn.net/v/t42.1790-29/10000000_135908591944579_8952886219809030402_n.mp4?_nc_cat=109&ccb=1-7&_nc_sid=5aebc0&efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfbGl2ZV9tZF9mcmFnXzJfYXVkaW8ifQ%3D%3D&_nc_ohc=c6VJ591q1SMAX90reBP&_nc_ht=scontent.fhkg3-1.fna&oh=00_AfAyKM-f6KBj9aUnhke-4rS4-8aFtiL3OZvUKRGEmrHETg&oe=63A2A28A",
+                            "start": 0,
+                            "end": 879,
+                            "representation_id": "1071129703728862a",
+                            "segment_type": "init",
+                            "mime_codec": "audio/mp4; codecs=\"mp4a.40.5\""
+                        },
+                        {
+                            "url": "https://scontent.fhkg3-1.fna.fbcdn.net/v/t42.1790-29/10000000_135908591944579_8952886219809030402_n.mp4?_nc_cat=109&ccb=1-7&_nc_sid=5aebc0&efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfbGl2ZV9tZF9mcmFnXzJfYXVkaW8ifQ%3D%3D&_nc_ohc=c6VJ591q1SMAX90reBP&_nc_ht=scontent.fhkg3-1.fna&oh=00_AfAyKM-f6KBj9aUnhke-4rS4-8aFtiL3OZvUKRGEmrHETg&oe=63A2A28A",
+                            "start": 880,
+                            "end": 11231,
+                            "representation_id": "1071129703728862a",
+                            "segment_type": "sidx",
+                            "mime_codec": "audio/mp4; codecs=\"mp4a.40.5\""
+                        },
+                        {
+                            "url": "https://scontent.fhkg3-1.fna.fbcdn.net/v/t42.1790-29/10000000_135908591944579_8952886219809030402_n.mp4?_nc_cat=109&ccb=1-7&_nc_sid=5aebc0&efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfbGl2ZV9tZF9mcmFnXzJfYXVkaW8ifQ%3D%3D&_nc_ohc=c6VJ591q1SMAX90reBP&_nc_ht=scontent.fhkg3-1.fna&oh=00_AfAyKM-f6KBj9aUnhke-4rS4-8aFtiL3OZvUKRGEmrHETg&oe=63A2A28A",
+                            "start": 11232,
+                            "end": 27476,
+                            "representation_id": "1071129703728862a",
+                            "segment_type": "data",
+                            "mime_codec": "audio/mp4; codecs=\"mp4a.40.5\""
+                        }
+                    ]
+                }
+            ],
+            "all_video_dash_prefetch_representations": [
+                {
+                    "representations": [
+                        {
+                            "representation_id": "937260383514448v",
+                            "mime_type": "video/mp4",
+                            "codecs": "avc1.4D401E",
+                            "base_url": "https://scontent.fhkg3-1.fna.fbcdn.net/v/t42.1790-29/10000000_763651057664049_7736904876217647096_n.mp4?_nc_cat=100&ccb=1-7&_nc_sid=5aebc0&efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfbGl2ZV9sZF9mcmFnXzJfdmlkZW8ifQ%3D%3D&_nc_ohc=WVVm3GoIywAAX9Fx5M9&_nc_ht=scontent.fhkg3-1.fna&oh=00_AfCHk9kd-f2yJpvGMrwc2H6ASgmoZj1r84JpBx_szIo30A&oe=63A2A450",
+                            "bandwidth": 255293,
+                            "height": 426,
+                            "width": 240,
+                            "playback_resolution_mos": "0:100,144:82.7,240:66,360:45,480:35.3",
+                            "segments": [
+                                {
+                                    "start": 0,
+                                    "end": 905
+                                },
+                                {
+                                    "start": 906,
+                                    "end": 10981
+                                },
+                                {
+                                    "start": 10982,
+                                    "end": 94923
+                                }
+                            ]
+                        },
+                        {
+                            "representation_id": "531805881337779v",
+                            "mime_type": "video/mp4",
+                            "codecs": "avc1.4D401E",
+                            "base_url": "https://scontent.fhkg3-1.fna.fbcdn.net/v/t42.1790-29/10000000_4063313237110968_2178782144944952315_n.mp4?_nc_cat=100&ccb=1-7&_nc_sid=5aebc0&efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfbGl2ZV9xZF9mcmFnXzJfdmlkZW8ifQ%3D%3D&_nc_ohc=InXFQHtD17wAX_7pypj&_nc_ht=scontent.fhkg3-1.fna&oh=00_AfDw9VHnMTiDhN-w5IhEe70aTMPmTUnzjy-sj1BBj8VNeA&oe=63A2A208",
+                            "bandwidth": 148711,
+                            "height": 256,
+                            "width": 144,
+                            "playback_resolution_mos": "0:100,144:74.9,360:28.9,480:22.3",
+                            "segments": [
+                                {
+                                    "start": 0,
+                                    "end": 904
+                                },
+                                {
+                                    "start": 905,
+                                    "end": 10980
+                                },
+                                {
+                                    "start": 10981,
+                                    "end": 54814
+                                }
+                            ]
+                        },
+                        {
+                            "representation_id": "512764830170410v",
+                            "mime_type": "video/mp4",
+                            "codecs": "avc1.4D401E",
+                            "base_url": "https://scontent.fhkg3-1.fna.fbcdn.net/o1/v/t29/f1/m49/512764830170410.mp4?efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfbGl2ZV9tZF9mcmFnXzJfdmlkZW8ifQ&_nc_ht=scontent.fhkg3-1.fna.fbcdn.net&_nc_cat=107&strext=1&ccb=9-4&oh=00_AfDsK-su2c5jeCOVNyBXTICyzDFmeQjaacoossVljU1iHA&oe=63A47786&_nc_sid=57d5c5",
+                            "bandwidth": 504926,
+                            "height": 640,
+                            "width": 360,
+                            "playback_resolution_mos": "0:100,144:90.3,360:66.4,480:55.4",
+                            "segments": [
+                                {
+                                    "start": 0,
+                                    "end": 905
+                                },
+                                {
+                                    "start": 906,
+                                    "end": 10981
+                                },
+                                {
+                                    "start": 10982,
+                                    "end": 177622
+                                }
+                            ]
+                        },
+                        {
+                            "representation_id": "799522460701387v",
+                            "mime_type": "video/mp4",
+                            "codecs": "avc1.4D401E",
+                            "base_url": "https://scontent.fhkg3-1.fna.fbcdn.net/o1/v/t29/f1/m49/799522460701387.mp4?efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfbGl2ZV9oZF9mcmFnXzJfdmlkZW8ifQ&_nc_ht=scontent.fhkg3-1.fna.fbcdn.net&_nc_cat=108&strext=1&ccb=9-4&oh=00_AfBSOKkpXQwai8nIx2Uer4SjVZ2Jow6QcZXib5pJ-kTwXw&oe=63A3E87A&_nc_sid=57d5c5",
+                            "bandwidth": 999788,
+                            "height": 854,
+                            "width": 480,
+                            "playback_resolution_mos": "0:100,144:94.5,360:78.3,480:71.2",
+                            "segments": [
+                                {
+                                    "start": 0,
+                                    "end": 905
+                                },
+                                {
+                                    "start": 906,
+                                    "end": 10981
+                                },
+                                {
+                                    "start": 10982,
+                                    "end": 319770
+                                }
+                            ]
+                        },
+                        {
+                            "representation_id": "1071129703728862a",
+                            "mime_type": "audio/mp4",
+                            "codecs": "mp4a.40.5",
+                            "base_url": "https://scontent.fhkg3-1.fna.fbcdn.net/v/t42.1790-29/10000000_135908591944579_8952886219809030402_n.mp4?_nc_cat=109&ccb=1-7&_nc_sid=5aebc0&efg=eyJ2ZW5jb2RlX3RhZyI6ImRhc2hfbGl2ZV9tZF9mcmFnXzJfYXVkaW8ifQ%3D%3D&_nc_ohc=c6VJ591q1SMAX90reBP&_nc_ht=scontent.fhkg3-1.fna&oh=00_AfAyKM-f6KBj9aUnhke-4rS4-8aFtiL3OZvUKRGEmrHETg&oe=63A2A28A",
+                            "bandwidth": 65315,
+                            "height": 0,
+                            "width": 0,
+                            "playback_resolution_mos": "",
+                            "segments": [
+                                {
+                                    "start": 0,
+                                    "end": 879
+                                },
+                                {
+                                    "start": 880,
+                                    "end": 11231
+                                },
+                                {
+                                    "start": 11232,
+                                    "end": 27476
+                                }
+                            ]
+                        }
+                    ],
+                    "video_id": 4726434867372698
+                }
+            ],
+            "is_final": false
+        }
+    },
+    "sequence_number": 12,
+    "variables": {},
+    "extra_context": null
+}
